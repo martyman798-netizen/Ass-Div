@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yaaaasss diva</title>
+<meta property="og:title" content="Yaaaasss diva 💅">
+<meta property="og:description" content="Jeg har noe å si. Scroll ned.">
+<meta property="og:image" content="diva.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --card: rgba(255, 255, 255, 0.82);
+    --ink: #2a1838;
+    --muted: #5b4a68;
+    --accent: #b14fd6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: "Baloo 2", system-ui, sans-serif;
+    color: var(--ink);
+    background: #3a2350;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Bildet ligger fast i bakgrunnen hele tiden (fungerer også på iPhone) */
+  .bg {
+    position: fixed;
+    inset: 0;
+    background: url("diva.jpg") center 30% / cover no-repeat;
+    z-index: -1;
+  }
+
+  .rainbow {
+    background: linear-gradient(90deg, #f25c5c, #f2a65c, #e8d24a, #6cc96c, #5cb8f2, #9a6cf2, #d65cf2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 16px 6vh;
+  }
+  .scroll-hint {
+    background: var(--card);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    animation: bob 1.6s ease-in-out infinite;
+  }
+  @keyframes bob { 50% { transform: translateY(8px); } }
+
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 16px 40vh;
+  }
+
+  .card {
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 28px 24px;
+    margin: 0 0 70vh;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .card.visible { opacity: 1; transform: none; }
+  .card:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    line-height: 1.15;
+    margin: 0 0 14px;
+  }
+  p { margin: 0 0 12px; font-size: 1.12rem; }
+  p:last-child { margin-bottom: 0; }
+  .small { color: var(--muted); font-size: 0.98rem; }
+  .big {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .vs {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    margin: 18px 0;
+    font-weight: 700;
+  }
+  .vs div { background: #fff; border-radius: 16px; padding: 12px 8px; }
+  .vs span { font-size: 1.6rem; }
+
+  ol { padding-left: 1.4em; margin: 0; }
+  ol li { margin-bottom: 12px; font-size: 1.08rem; }
+  ol li strong { color: var(--accent); }
+
+  ul.promises { list-style: none; padding: 0; margin: 0; }
+  ul.promises li {
+    padding: 10px 0 10px 34px;
+    position: relative;
+    font-size: 1.08rem;
+    border-bottom: 1px dashed rgba(0,0,0,0.12);
+  }
+  ul.promises li:last-child { border-bottom: 0; }
+  ul.promises li::before { content: "💅"; position: absolute; left: 0; }
+
+  .buttons {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+    min-height: 60px;
+  }
+  button {
+    font-family: inherit;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 26px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  button:active { transform: scale(0.96); }
+  .yes { background: linear-gradient(90deg, #f25c8a, #b14fd6); color: #fff; }
+  .yes:hover { transform: scale(1.05); }
+  .no { background: #e5dcec; color: var(--muted); }
+  .no.runaway { position: fixed; z-index: 10; transition: left 0.25s ease, top 0.25s ease; }
+
+  .answer { display: none; text-align: center; margin-top: 20px; }
+  .answer.show { display: block; animation: pop 0.5s ease; }
+  @keyframes pop { from { transform: scale(0.7); opacity: 0; } to { transform: none; opacity: 1; } }
+  .answer a {
+    display: inline-block;
+    margin-top: 10px;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  .confetti {
+    position: fixed;
+    top: -40px;
+    font-size: 1.8rem;
+    pointer-events: none;
+    z-index: 20;
+    animation: fall linear forwards;
+  }
+  @keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; opacity: 1; transform: none; }
+    .scroll-hint { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="scroll-hint">Scroll ned, diva. Jeg har noe å si ↓</div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Okei. <span class="rainbow">Status.</span></h2>
+    <p>Vi har kranglet i mange dager nå. Det er ikke gøy. Ikke for meg, og jeg tipper ikke for deg heller.</p>
+    <div class="vs">
+      <div>Jeg: «Jeg har rett.»</div>
+      <span>🤝</span>
+      <div>Du: «Jeg har rett.»</div>
+    </div>
+    <p>Statistisk sett er det ganske sannsynlig at vi <strong>begge</strong> har litt rett. Og litt ikke.</p>
+  </section>
+
+  <section class="card">
+    <h2>Det jeg har innsett 🧠</h2>
+    <p>Jeg har brukt veldig mye energi på å få deg til å forstå <em>meg</em>.</p>
+    <p>Og nesten ingenting på å prøve å forstå <em>deg</em>.</p>
+    <p>Det er ikke diva-oppførsel. Ekte divaer lytter. (Det står i diva-håndboka. Side 1.)</p>
+  </section>
+
+  <section class="card">
+    <p class="big">Jeg savner <span class="rainbow">oss</span> mer enn jeg vil ha rett.</p>
+  </section>
+
+  <section class="card">
+    <h2>Forslag: <span class="rainbow">Diva-protokollen</span> 💅</h2>
+    <ol>
+      <li><strong>Vi setter oss ned.</strong> Snacks er obligatorisk. Det er ikke forhandlingsbart.</li>
+      <li><strong>Du snakker først.</strong> Jeg avbryter ikke. Ikke engang med ansiktsuttrykk.</li>
+      <li><strong>Jeg gjentar det jeg hørte</strong> – med mine egne ord – helt til du sier «ja, det var det jeg mente». Ikke før.</li>
+      <li><strong>Så bytter vi.</strong> Samme regler for deg.</li>
+      <li><strong>Forbudte ord:</strong> «alltid», «aldri» og «du bare …».</li>
+      <li><strong>Vi snakker om hvordan det føltes</strong>, ikke bare om hvem som sa hva.</li>
+      <li><strong>Pause-ordet er «diva».</strong> Blir det for hett, sier en av oss det, og så tar vi ti minutter pause før vi fortsetter.</li>
+      <li><strong>Målet er ikke å kåre en vinner.</strong> Målet er at vi begge går derfra og føler oss forstått.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>Det jeg lover 🤞</h2>
+    <ul class="promises">
+      <li>Å lytte for å forstå, ikke for å finne motargumenter.</li>
+      <li>Å si unnskyld for min del, uten et «men» etterpå.</li>
+      <li>At vi kan være uenige og fortsatt være et lag.</li>
+      <li>At det å tape en diskusjon aldri er like ille som å miste nærheten til deg.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Så … er du med? 🥺</h2>
+    <p>Du trenger ikke svare nå. Men hvis du er klar:</p>
+    <div class="buttons">
+      <button class="yes" id="yes">Yaaaasss 💅</button>
+      <button class="no" id="no">Nei</button>
+    </div>
+    <div class="answer" id="answer">
+      <p class="big rainbow">Diva-møte booket!</p>
+      <p>Du velger tidspunkt. Jeg tar med snacks. ❤️</p>
+      <a id="sms" href="#">Si fra til meg på SMS</a>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Kortene glir inn når du scroller
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.card').forEach((c) => io.observe(c));
+
+  // "Nei"-knappen er litt vanskelig å treffe
+  const no = document.getElementById('no');
+  const noTexts = ['Nei', 'Er du sikker?', 'Helt sikker?', 'Tenk på snacksen', 'Diva sier nei til nei', 'Prøv den andre knappen 👉'];
+  let tries = 0;
+  function runAway(ev) {
+    if (ev) ev.preventDefault();
+    tries++;
+    no.textContent = noTexts[Math.min(tries, noTexts.length - 1)];
+    no.classList.add('runaway');
+    const pad = 16;
+    const maxX = window.innerWidth - no.offsetWidth - pad;
+    const maxY = window.innerHeight - no.offsetHeight - pad;
+    no.style.left = Math.max(pad, Math.random() * maxX) + 'px';
+    no.style.top = Math.max(pad, Math.random() * maxY) + 'px';
+  }
+  no.addEventListener('mouseenter', runAway);
+  no.addEventListener('touchstart', runAway, { passive: false });
+  no.addEventListener('click', runAway);
+
+  // "Ja" = konfetti og svar
+  const message = 'Yaaaasss diva 💅 Jeg er med på diva-møte. Du tar med snacks.';
+  document.getElementById('sms').href = 'sms:?&body=' + encodeURIComponent(message);
+
+  document.getElementById('yes').addEventListener('click', () => {
+    document.getElementById('answer').classList.add('show');
+    no.style.display = 'none';
+    const emojis = ['💅', '✨', '🌈', '❤️', '🍿', '🐶'];
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('span');
+      s.className = 'confetti';
+      s.textContent = emojis[i % emojis.length];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.animationDuration = 2 + Math.random() * 2.5 + 's';
+      s.style.animationDelay = Math.random() * 0.8 + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 5500);
+    }
+  });
+</script>
+</body>
+</html>
