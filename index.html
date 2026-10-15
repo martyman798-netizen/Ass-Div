@@ -45,10 +45,25 @@
     min-height: 100vh;
     min-height: 100svh;
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding: 0 16px 6vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5vh 16px 6vh;
   }
+  .greeting {
+    background: var(--card);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 12px 26px;
+    border-radius: 24px;
+    font-size: clamp(1.8rem, 8vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  }
+  .heart { display: inline-block; animation: beat 1.2s ease-in-out infinite; }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.25); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } }
   .scroll-hint {
     background: var(--card);
     backdrop-filter: blur(6px);
@@ -121,7 +136,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .card { transition: none; opacity: 1; transform: none; }
-    .scroll-hint { animation: none; }
+    .scroll-hint, .heart { animation: none; }
   }
 </style>
 </head>
@@ -129,6 +144,7 @@
 <div class="bg" aria-hidden="true"></div>
 
 <header class="hero">
+  <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <span class="heart">💖</span></h1>
   <div class="scroll-hint">Scroll ned, diva. Jeg har noe å si ↓</div>
 </header>
 
