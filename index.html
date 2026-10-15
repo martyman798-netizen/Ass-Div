@@ -109,68 +109,15 @@
   .vs div { background: #fff; border-radius: 16px; padding: 12px 8px; }
   .vs span { font-size: 1.6rem; }
 
-  ol { padding-left: 1.4em; margin: 0; }
-  ol li { margin-bottom: 12px; font-size: 1.08rem; }
-  ol li strong { color: var(--accent); }
-
-  ul.promises { list-style: none; padding: 0; margin: 0; }
-  ul.promises li {
-    padding: 10px 0 10px 34px;
-    position: relative;
-    font-size: 1.08rem;
-    border-bottom: 1px dashed rgba(0,0,0,0.12);
-  }
-  ul.promises li:last-child { border-bottom: 0; }
-  ul.promises li::before { content: "💅"; position: absolute; left: 0; }
-
-  .buttons {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 20px;
-    min-height: 60px;
-  }
-  button {
-    font-family: inherit;
-    font-size: 1.15rem;
-    font-weight: 700;
-    border: 0;
-    border-radius: 999px;
-    padding: 12px 26px;
-    cursor: pointer;
-    transition: transform 0.15s ease;
-  }
-  button:active { transform: scale(0.96); }
-  .yes { background: linear-gradient(90deg, #f25c8a, #b14fd6); color: #fff; }
-  .yes:hover { transform: scale(1.05); }
-  .no { background: #e5dcec; color: var(--muted); }
-  .no.runaway { position: fixed; z-index: 10; transition: left 0.25s ease, top 0.25s ease; }
-
-  .answer { display: none; text-align: center; margin-top: 20px; }
-  .answer.show { display: block; animation: pop 0.5s ease; }
-  @keyframes pop { from { transform: scale(0.7); opacity: 0; } to { transform: none; opacity: 1; } }
-  .answer a {
-    display: inline-block;
-    margin-top: 10px;
-    background: var(--ink);
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 22px;
-    border-radius: 999px;
+  .card h2 + p.lead { font-weight: 700; }
+  .highlight {
+    background: rgba(255,255,255,0.7);
+    border-left: 5px solid var(--accent);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 16px 0;
     font-weight: 700;
   }
-
-  .confetti {
-    position: fixed;
-    top: -40px;
-    font-size: 1.8rem;
-    pointer-events: none;
-    z-index: 20;
-    animation: fall linear forwards;
-  }
-  @keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
 
   @media (prefers-reduced-motion: reduce) {
     .card { transition: none; opacity: 1; transform: none; }
@@ -198,52 +145,39 @@
   </section>
 
   <section class="card">
-    <h2>Det jeg har innsett 🧠</h2>
-    <p>Jeg har brukt veldig mye energi på å få deg til å forstå <em>meg</em>.</p>
-    <p>Og nesten ingenting på å prøve å forstå <em>deg</em>.</p>
-    <p>Det er ikke diva-oppførsel. Ekte divaer lytter. (Det står i diva-håndboka. Side 1.)</p>
+    <h2>Jeg har <span class="rainbow">tenkt</span> 🧠</h2>
+    <p>Jeg har tenkt mye. Jeg føler jeg forstår hvor du kommer fra, og jeg vet hvorfor jeg kjemper for det jeg mener.</p>
+    <p>Men jeg mistenker at følelsene hos oss begge har gjort det nesten umulig å virkelig ta inn det den andre sier.</p>
   </section>
 
   <section class="card">
-    <p class="big">Jeg savner <span class="rainbow">oss</span> mer enn jeg vil ha rett.</p>
+    <h2>Først: <span class="rainbow">du har rett</span></h2>
+    <p>Du sier – og du <strong>har rett</strong> i – at du ikke trenger å henge med, omgås eller snakke med folk som gir deg dårlig energi eller er kjipe mot deg.</p>
+    <p class="highlight">Det er 100 % lov, og det er noe jeg vil forsvare for deg.</p>
+    <p>Du følte sikkert at jeg utfordret det. Det var aldri meningen.</p>
   </section>
 
   <section class="card">
-    <h2>Forslag: <span class="rainbow">Diva-protokollen</span> 💅</h2>
-    <ol>
-      <li><strong>Vi setter oss ned.</strong> Snacks er obligatorisk. Det er ikke forhandlingsbart.</li>
-      <li><strong>Du snakker først.</strong> Jeg avbryter ikke. Ikke engang med ansiktsuttrykk.</li>
-      <li><strong>Jeg gjentar det jeg hørte</strong> – med mine egne ord – helt til du sier «ja, det var det jeg mente». Ikke før.</li>
-      <li><strong>Så bytter vi.</strong> Samme regler for deg.</li>
-      <li><strong>Forbudte ord:</strong> «alltid», «aldri» og «du bare …».</li>
-      <li><strong>Vi snakker om hvordan det føltes</strong>, ikke bare om hvem som sa hva.</li>
-      <li><strong>Pause-ordet er «diva».</strong> Blir det for hett, sier en av oss det, og så tar vi ti minutter pause før vi fortsetter.</li>
-      <li><strong>Målet er ikke å kåre en vinner.</strong> Målet er at vi begge går derfra og føler oss forstått.</li>
-    </ol>
+    <h2>Så, over til <span class="rainbow">meg</span></h2>
+    <p>Jeg har vært, og er fortsatt, skikkelig frustrert over det som fra min side oppleves som at du fraskriver deg ansvaret.</p>
+    <p>Simen er en nær venn av meg, og Guro er viktig for ham. Du og jeg har bygget en relasjon til dem begge gjennom flere år, med reiser og mye mer.</p>
+    <p>Når du plutselig – sett fra deres side – kutter all kontakt, og samtidig sier til meg «du får si ifra, du får fikse det, han er din venn», havner jeg i en ekstremt ubehagelig situasjon.</p>
+    <p>Da må jeg forklare til én jeg er glad i, hvorfor en annen jeg er glad i ikke vil henge lenger.</p>
+    <p class="highlight">Det er ikke min jobb. Jeg er ikke postbud. 📮</p>
+    <p>Det er ikke gøy å måtte formidle noe som risikerer å sette noen jeg er glad i – altså deg – i et dårlig lys. Det er ikke greit å legge det på meg.</p>
   </section>
 
   <section class="card">
-    <h2>Det jeg lover 🤞</h2>
-    <ul class="promises">
-      <li>Å lytte for å forstå, ikke for å finne motargumenter.</li>
-      <li>Å si unnskyld for min del, uten et «men» etterpå.</li>
-      <li>At vi kan være uenige og fortsatt være et lag.</li>
-      <li>At det å tape en diskusjon aldri er like ille som å miste nærheten til deg.</li>
-    </ul>
+    <h2>Og en ting til</h2>
+    <p>Når jeg hører at du ikke bryr deg, at det ikke er viktig, eller at jeg bare overreagerer og må kontrollere følelsene mine, blir jeg <strong>ekstremt</strong> provosert. Da føles det som om noe som er veldig viktig for meg blir avfeid.</p>
+    <p>Relasjonene mine er ekstremt viktige for meg – og spesielt din relasjon til menneskene i livet mitt.</p>
   </section>
 
   <section class="card">
-    <h2>Så … er du med? 🥺</h2>
-    <p>Du trenger ikke svare nå. Men hvis du er klar:</p>
-    <div class="buttons">
-      <button class="yes" id="yes">Yaaaasss 💅</button>
-      <button class="no" id="no">Nei</button>
-    </div>
-    <div class="answer" id="answer">
-      <p class="big rainbow">Diva-møte booket!</p>
-      <p>Du velger tidspunkt. Jeg tar med snacks. ❤️</p>
-      <a id="sms" href="#">Si fra til meg på SMS</a>
-    </div>
+    <p class="big">Jeg trenger ikke at du er bestis med alle.</p>
+    <p class="big">Jeg trenger ikke engang at du kjenner dem.</p>
+    <p class="big">Bare at du viser dem den <span class="rainbow">respekten</span> de fortjener.</p>
+    <p style="text-align:center; margin-top:18px; font-size:1.25rem">Ikke bare fordi det er rett, men fordi det er viktig for <strong class="rainbow">meg</strong>.</p>
   </section>
 </main>
 
@@ -254,44 +188,6 @@
   }, { threshold: 0.25 });
   document.querySelectorAll('.card').forEach((c) => io.observe(c));
 
-  // "Nei"-knappen er litt vanskelig å treffe
-  const no = document.getElementById('no');
-  const noTexts = ['Nei', 'Er du sikker?', 'Helt sikker?', 'Tenk på snacksen', 'Diva sier nei til nei', 'Prøv den andre knappen 👉'];
-  let tries = 0;
-  function runAway(ev) {
-    if (ev) ev.preventDefault();
-    tries++;
-    no.textContent = noTexts[Math.min(tries, noTexts.length - 1)];
-    no.classList.add('runaway');
-    const pad = 16;
-    const maxX = window.innerWidth - no.offsetWidth - pad;
-    const maxY = window.innerHeight - no.offsetHeight - pad;
-    no.style.left = Math.max(pad, Math.random() * maxX) + 'px';
-    no.style.top = Math.max(pad, Math.random() * maxY) + 'px';
-  }
-  no.addEventListener('mouseenter', runAway);
-  no.addEventListener('touchstart', runAway, { passive: false });
-  no.addEventListener('click', runAway);
-
-  // "Ja" = konfetti og svar
-  const message = 'Yaaaasss diva 💅 Jeg er med på diva-møte. Du tar med snacks.';
-  document.getElementById('sms').href = 'sms:?&body=' + encodeURIComponent(message);
-
-  document.getElementById('yes').addEventListener('click', () => {
-    document.getElementById('answer').classList.add('show');
-    no.style.display = 'none';
-    const emojis = ['💅', '✨', '🌈', '❤️', '🍿', '🐶'];
-    for (let i = 0; i < 40; i++) {
-      const s = document.createElement('span');
-      s.className = 'confetti';
-      s.textContent = emojis[i % emojis.length];
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.animationDuration = 2 + Math.random() * 2.5 + 's';
-      s.style.animationDelay = Math.random() * 0.8 + 's';
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 5500);
-    }
-  });
 </script>
 </body>
 </html>
