@@ -26,13 +26,21 @@
     overflow-x: hidden;
   }
 
-  /* Bildet ligger fast i bakgrunnen hele tiden (fungerer også på iPhone) */
+  /* Bildene ligger fast i bakgrunnen (fungerer også på iPhone) og bytter når du scroller */
   .bg {
     position: fixed;
     inset: 0;
-    background: url("diva.jpg") center 30% / cover no-repeat;
+    background: center 30% / cover no-repeat;
     z-index: -1;
+    opacity: 0;
+    transition: opacity 0.8s ease;
   }
+  .bg.active { opacity: 1; }
+  .bg-diva { background-image: url("diva.jpg"); }
+  .bg-mikke { background-image: url("mikke.jpg"); }
+  .bg-sladder { background-image: url("sladder.jpg"); }
+  .bg-taco { background-image: url("taco.jpg"); background-position: center; }
+  .bg-agurk { background-image: url("agurk.jpg"); background-position: center 40%; }
 
   .rainbow {
     background: linear-gradient(90deg, #f25c5c, #f2a65c, #e8d24a, #6cc96c, #5cb8f2, #9a6cf2, #d65cf2);
@@ -196,6 +204,22 @@
   #yes { left: 12%; }
   #no { left: 58%; transition: left 0.25s ease, top 0.25s ease; }
 
+  /* Dagens diva-energi */
+  .polaroid {
+    --tilt: -3deg;
+    background: #fff;
+    padding: 10px 10px 14px;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    margin: 18px auto;
+    max-width: 320px;
+    transform: rotate(var(--tilt));
+  }
+  .polaroid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; }
+  .polaroid figcaption { margin-top: 10px; font-weight: 700; text-align: center; line-height: 1.3; }
+  .polaroid.pop { animation: pop 0.4s ease; }
+  @keyframes pop { from { transform: rotate(var(--tilt)) scale(0.6); opacity: 0; } }
+
   ol.rules { margin: 0; padding-left: 1.4em; font-size: 1.12rem; }
   ol.rules li { margin-bottom: 10px; }
   ol.rules li::marker { font-weight: 800; color: var(--accent); }
@@ -213,15 +237,19 @@
 
   @media (prefers-reduced-motion: reduce) {
     .card { transition: none; opacity: 1; transform: none; }
-    .scroll-hint, .heart, .meter.broken { animation: none; }
-    .meter-fill, #no { transition: none; }
+    .scroll-hint, .heart, .meter.broken, .polaroid.pop { animation: none; }
+    .meter-fill, #no, .bg { transition: none; }
   }
 </style>
 </head>
 <body>
-<div class="bg" aria-hidden="true"></div>
+<div class="bg bg-diva active" data-name="diva" aria-hidden="true"></div>
+<div class="bg bg-mikke" data-name="mikke" aria-hidden="true"></div>
+<div class="bg bg-sladder" data-name="sladder" aria-hidden="true"></div>
+<div class="bg bg-taco" data-name="taco" aria-hidden="true"></div>
+<div class="bg bg-agurk" data-name="agurk" aria-hidden="true"></div>
 
-<header class="hero">
+<header class="hero" data-bg="diva">
   <div class="hero-top">
     <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <span class="heart">💖</span></h1>
     <div class="retired">🏖️ Pensjonert. Driver nå kun med tull.</div>
@@ -230,7 +258,7 @@
 </header>
 
 <main>
-  <section class="card">
+  <section class="card" data-bg="diva">
     <h2>Oppdrag <span class="rainbow">fullført</span> ✅</h2>
     <p>Denne nettsiden hadde én jobb. Den gjorde den. Nå har den fått sluttpakke, gullklokke og et par solbriller.</p>
     <div class="vs">
@@ -240,7 +268,7 @@
     <p class="small">Herfra og ned er alt 100 % tull. Du er advart.</p>
   </section>
 
-  <section class="card">
+  <section class="card" data-bg="mikke">
     <h2>Diva-o-<span class="rainbow">meter</span> 📏</h2>
     <p>Vitenskapelig kalibrert. Garantert presis. Trykk og se.</p>
     <div class="meter" id="meter"><div class="meter-fill" id="meter-fill"></div></div>
@@ -248,7 +276,7 @@
     <p class="center"><button class="btn" id="measure">Mål diva-nivå 💅</button></p>
   </section>
 
-  <section class="card">
+  <section class="card" data-bg="sladder">
     <h2>Viktig <span class="rainbow">spørsmål</span></h2>
     <p class="big">Er du en diva?</p>
     <div class="choices" id="choices">
@@ -258,14 +286,24 @@
     <p class="result" id="choice-result" aria-live="polite"></p>
   </section>
 
-  <section class="card">
+  <section class="card" data-bg="diva">
+    <h2>Dagens <span class="rainbow">diva-energi</span> 🔮</h2>
+    <p>Universet har en beskjed til deg. Trykk for å se hvilken energi du har i dag.</p>
+    <figure class="polaroid" id="energy" hidden>
+      <img id="energy-img" alt="">
+      <figcaption id="energy-text" aria-live="polite"></figcaption>
+    </figure>
+    <p class="center"><button class="btn" id="energy-btn">Vis dagens energi 🔮</button></p>
+  </section>
+
+  <section class="card" data-bg="taco">
     <h2>Postkontoret er <span class="rainbow">stengt</span> 📮</h2>
     <p>Postbudet har levert sin siste melding og sagt opp.</p>
     <p class="highlight">Fra og med i dag må alle meldinger leveres personlig. Takk for forståelsen.</p>
     <p class="small">Klager kan sendes til postbudet. Å nei, vent.</p>
   </section>
 
-  <section class="card">
+  <section class="card" data-bg="agurk">
     <h2>Offisielle <span class="rainbow">diva-regler</span> 📜</h2>
     <ol class="rules">
       <li>Man går aldri inn i et rom. Man gjør <strong>entré</strong>.</li>
@@ -273,11 +311,11 @@
       <li>Solbriller er et humør, ikke et tilbehør. 🕶️</li>
       <li>Hydrér. Diva-glød kommer ikke av seg selv. 💧</li>
       <li>Når folk er ass: vær den voksne i rommet. Med perfekt hår.</li>
-      <li>Hunden på bakgrunnen er alltid den største divaen. Det er bare sånn det er.</li>
+      <li>Uansett hvem som dukker opp i bakgrunnen, er hunden fortsatt den største divaen. Det er bare sånn det er.</li>
     </ol>
   </section>
 
-  <section class="card">
+  <section class="card" data-bg="diva">
     <h2>Diva-<span class="rainbow">nødknapp</span> 🚨</h2>
     <p>Kjedelig dag? For lite glitter i livet? Trykk.</p>
     <p class="center"><button class="btn" id="panic">Send diva-forsterkninger</button></p>
@@ -292,6 +330,16 @@
     entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.25 });
   document.querySelectorAll('.card').forEach((c) => io.observe(c));
+
+  // Bakgrunnen bytter til kortets egen diva når kortet når midten av skjermen
+  const layers = document.querySelectorAll('.bg');
+  const bgObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      layers.forEach((l) => l.classList.toggle('active', l.dataset.name === e.target.dataset.bg));
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  document.querySelectorAll('[data-bg]').forEach((el) => bgObserver.observe(el));
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pick = (list) => list[Math.floor(Math.random() * list.length)];
@@ -390,6 +438,34 @@
   yes.addEventListener('click', () => {
     choiceResult.textContent = 'Selvfølgelig. Det visste vi. 💅';
     rain();
+  });
+
+  // Dagens diva-energi
+  const energies = [
+    ['diva.jpg', 'Smilende hund med teksten Yaaaasss diva', 'Yaaaasss diva. Som vanlig. Ingen overraskelser her. 💅'],
+    ['mikke.jpg', 'Smilende ansikt i Mikke Mus-kostyme', 'Magisk, men litt forvirrende. Ingen vet helt hva som skjer, men alle smiler. ✨'],
+    ['sladder.jpg', 'Forvrengt selfie med et lurt smil', 'Vet noe du ikke vet, og har ikke tenkt å si det. 👀'],
+    ['taco.jpg', 'Smilende person som sikler', 'Har akkurat fått vite at det er taco til middag. 🌮'],
+    ['agurk.jpg', 'Person med munnen full av agurker', 'Spa-dag. Agurkene havnet litt feil, men selvtilliten sitter. 🥒'],
+  ];
+  const energy = document.getElementById('energy');
+  const energyImg = document.getElementById('energy-img');
+  const energyText = document.getElementById('energy-text');
+  const energyBtn = document.getElementById('energy-btn');
+  let lastEnergy = null;
+  energyBtn.addEventListener('click', () => {
+    let en;
+    do { en = pick(energies); } while (en === lastEnergy);
+    lastEnergy = en;
+    energyImg.src = en[0];
+    energyImg.alt = en[1];
+    energyText.textContent = en[2];
+    energy.hidden = false;
+    energy.style.setProperty('--tilt', (Math.random() * 8 - 4).toFixed(1) + 'deg');
+    energy.classList.remove('pop');
+    void energy.offsetWidth;
+    energy.classList.add('pop');
+    energyBtn.textContent = 'Spør universet igjen 🔮';
   });
 
   // Nødknapp
