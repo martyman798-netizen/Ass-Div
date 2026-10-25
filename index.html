@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Diva-kalenderen</title>
-<meta property="og:title" content="Diva-kalenderen 🎄💅">
-<meta property="og:description" content="24 dører. Hver av dem gjør noe forskjellig. Det blir rarere.">
+<title>Diva-veggen</title>
+<meta property="og:title" content="Diva-veggen 💅">
+<meta property="og:description" content="Dører, luker, skuffer og en safe. 24 ting som kan åpnes. Det blir rarere.">
 <meta property="og:image" content="diva.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
@@ -43,18 +43,6 @@
     background-clip: text;
     color: transparent;
   }
-
-  /* Snø */
-  .flake {
-    position: fixed;
-    top: -2rem;
-    color: #fff;
-    opacity: 0.75;
-    pointer-events: none;
-    z-index: 5;
-    animation: snow linear infinite;
-  }
-  @keyframes snow { to { transform: translate(30px, 110vh) rotate(180deg); } }
 
   .hero {
     min-height: 100vh;
@@ -178,7 +166,6 @@
   .btn:active { transform: scale(0.96); }
   .btn.plain { background: #fff; color: var(--ink); }
 
-  /* Kalenderen */
   .progress {
     display: inline-block;
     background: #2a1838;
@@ -188,75 +175,197 @@
     font-weight: 700;
     font-size: 0.95rem;
   }
-  .calendar {
+
+  /* ---------- Veggen med ting som kan åpnes ---------- */
+  .wall {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 84px;
+    grid-auto-flow: dense;
     gap: 10px;
     margin-top: 18px;
   }
-  @media (min-width: 560px) { .calendar { grid-template-columns: repeat(6, 1fr); } }
-  .slot {
+  @media (min-width: 560px) { .wall { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 96px; } }
+  .w2 { grid-column: span 2; }
+  .h2 { grid-row: span 2; }
+
+  .thing {
     position: relative;
-    aspect-ratio: 3 / 4;
     border: 0;
     padding: 0;
-    border-radius: 12px;
     background: none;
-    perspective: 500px;
+    border-radius: 10px;
+    perspective: 600px;
     cursor: pointer;
     touch-action: manipulation;
   }
-  .slot .behind {
+  .thing .inside {
     position: absolute;
     inset: 0;
+    z-index: 0;
     display: grid;
     place-items: center;
-    border-radius: 12px;
+    border-radius: inherit;
+    overflow: hidden;
     font-size: 1.9rem;
     background: radial-gradient(circle, #fff3c4 0%, #f2a65c 55%, #6e2f8a 100%);
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.55);
   }
-  .slot .door {
+  .thing .panel {
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    background: var(--c);
-    color: #fff;
+    z-index: 1;
+    border-radius: inherit;
+    background: var(--c, #7e57c2);
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.3), 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+  .thing .panel::after { content: ""; position: absolute; background: rgba(255, 255, 255, 0.85); }
+  .thing .plate {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink);
     font-weight: 800;
-    font-size: clamp(1.4rem, 6vw, 1.9rem);
-    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
-    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35), 0 4px 10px rgba(0, 0, 0, 0.2);
-    transform-origin: left center;
-    transition: transform 0.6s ease;
-  }
-  .slot .door::after {
-    content: "";
-    position: absolute;
-    right: 10%;
-    top: 50%;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.85);
-  }
-  @media (hover: hover) { .slot:not(.open):hover .door { transform: rotateY(-15deg); } }
-  .slot.open .door { transform: rotateY(-72deg); }
-  .slot.locked .door::before {
-    content: "🔒";
-    position: absolute;
-    top: 4px;
-    right: 6px;
     font-size: 0.9rem;
-    text-shadow: none;
+    line-height: 1.5;
+    padding: 0 7px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
   }
-  .slot.shake { animation: shake 0.4s ease-in-out 2; }
+  @media (hover: hover) { .thing:not(.open):hover .panel { filter: brightness(1.12); } }
+  .thing.shake { animation: shake 0.4s ease-in-out 2; }
+  .thing.snap .panel { transition: none; }
   @keyframes shake { 25% { transform: translateX(-6px) rotate(-1deg); } 75% { transform: translateX(6px) rotate(1deg); } }
 
-  .under {
-    margin-top: 50vh;
-    text-align: center;
+  /* Dør: svinger ut fra venstre */
+  .t-door .panel { transform-origin: left center; }
+  .t-door .panel::after { right: 12%; top: 50%; width: 8px; height: 8px; border-radius: 50%; }
+  .t-door.open .panel { transform: rotateY(-75deg); }
+
+  /* Skapdører: to halvdeler */
+  .t-double .panel.l { right: 50%; transform-origin: left center; border-radius: 10px 0 0 10px; }
+  .t-double .panel.r { left: 50%; transform-origin: right center; border-radius: 0 10px 10px 0; }
+  .t-double .panel::after { top: 50%; width: 6px; height: 18px; margin-top: -9px; border-radius: 3px; }
+  .t-double .panel.l::after { right: 7px; }
+  .t-double .panel.r::after { left: 7px; }
+  .t-double.open .panel.l { transform: rotateY(-80deg); }
+  .t-double.open .panel.r { transform: rotateY(80deg); }
+
+  /* Luke: hengslet oppe, løftes opp */
+  .t-hatch .panel { transform-origin: center top; }
+  .t-hatch .panel::after { left: 50%; bottom: 10px; width: 26px; height: 6px; margin-left: -13px; border-radius: 3px; }
+  .t-hatch.open .panel { transform: rotateX(75deg); }
+
+  /* Klaff: hengslet nede, faller ned (som en brevsprekk) */
+  .t-flap .panel { transform-origin: center bottom; }
+  .t-flap .panel::after { left: 20%; right: 20%; top: 12px; height: 6px; border-radius: 3px; background: rgba(0, 0, 0, 0.35); }
+  .t-flap.open .panel { transform: rotateX(-75deg); }
+
+  /* Skyveluke: glir til siden og inn i veggen */
+  .t-slide { overflow: hidden; }
+  .t-slide .panel {
+    background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 3px, transparent 3px 7px) 6px 0 / 20px 100% no-repeat, var(--c, #7e57c2);
   }
+  .t-slide.open .panel { transform: translateX(86%); }
+
+  /* Skuff: trekkes ut, så du ser ned i den */
+  .t-drawer { overflow: hidden; }
+  .t-drawer .inside { place-items: start center; padding-top: 4px; font-size: 1.6rem; background: linear-gradient(#2b1d14, #5a3d2a); }
+  .t-drawer .panel { background: linear-gradient(180deg, #c58b57, #8b5a2b); }
+  .t-drawer .panel::after { left: 50%; top: 50%; width: 36px; height: 8px; margin: -4px 0 0 -18px; border-radius: 4px; background: #f3e2c7; }
+  .t-drawer.open .panel { transform: translateY(55%); box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.4); }
+
+  /* Teppe: to halvdeler som trekkes til side */
+  .t-curtain::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    top: -5px;
+    height: 12px;
+    z-index: 2;
+    border-radius: 6px;
+    background: linear-gradient(#e8c65a, #a8841c);
+  }
+  .t-curtain .panel {
+    background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0 5px, rgba(255, 255, 255, 0.08) 5px 9px, transparent 9px 16px), var(--c2, #b0213a);
+  }
+  .t-curtain .panel::after { display: none; }
+  .t-curtain .panel.l { right: 50%; transform-origin: left center; border-radius: 10px 0 0 10px; }
+  .t-curtain .panel.r { left: 50%; transform-origin: right center; border-radius: 0 10px 10px 0; }
+  .t-curtain.open .panel { transform: scaleX(0.16); }
+
+  /* Rulleport: ruller opp */
+  .t-roller { overflow: hidden; }
+  .t-roller .panel {
+    background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0 2px, rgba(255, 255, 255, 0.14) 2px 4px, transparent 4px 10px), var(--c, #7e57c2);
+  }
+  .t-roller .panel::after { left: 50%; bottom: 6px; width: 22px; height: 6px; margin-left: -11px; border-radius: 3px; }
+  .t-roller.open .panel { transform: translateY(-88%); }
+
+  /* Koøye: rundt vindu med metallring */
+  .t-porthole .inside, .t-porthole .panel {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+  }
+  .t-porthole::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 76px;
+    height: 76px;
+    margin: -38px 0 0 -38px;
+    z-index: 2;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle at 35% 35%, #eef2f5, #8a949d 70%, #5f6870);
+    -webkit-mask: radial-gradient(circle, transparent 0 29px, #000 30px);
+    mask: radial-gradient(circle, transparent 0 29px, #000 30px);
+  }
+  .t-porthole .panel {
+    background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85), rgba(150, 195, 230, 0.75) 40%, #3d6680 100%);
+    transform-origin: left center;
+  }
+  .t-porthole .panel::after { display: none; }
+  .t-porthole.open .panel { transform: rotateY(-80deg); }
+
+  /* Safe: tung dør med hjul */
+  .t-safe .panel { background: linear-gradient(145deg, #6b7380, #353a42); transform-origin: left center; transition-duration: 1s; }
+  .t-safe .panel::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 38px;
+    height: 38px;
+    margin: -19px 0 0 -19px;
+    border-radius: 50%;
+    border: 3px solid #222;
+    background: radial-gradient(circle, #ddd 0 22%, #888 23% 62%, #555 63%);
+  }
+  .t-safe .panel::after { right: 10px; top: 50%; width: 8px; height: 28px; margin-top: -14px; border-radius: 4px; background: #c9a227; }
+  .t-safe.open .panel { transform: rotateY(-80deg); }
+
+  /* Ting inne i rommene */
+  .thing.solo { display: block; width: 150px; height: 110px; margin: 16px auto 8px; }
+  .thing.solo.t-door { width: 110px; height: 160px; }
+  .thing.solo.t-drawer { width: 200px; height: 90px; }
+  .thing.solo.t-curtain { width: 200px; height: 150px; }
+  .thing.solo.tiny { width: 26px; height: 38px; border-radius: 4px; margin-top: 4px; animation: pop 0.4s ease; }
+  .thing.solo.tiny .panel::after { width: 4px; height: 4px; }
+
+  .under { margin-top: 50vh; text-align: center; }
   .ghost {
     border: 0;
     background: none;
@@ -268,7 +377,7 @@
   }
   .reset { margin-top: 30vh; font-size: 0.85rem; }
 
-  /* Rommene bak dørene */
+  /* ---------- Rommene bak tingene ---------- */
   .room {
     position: fixed;
     inset: 0;
@@ -323,6 +432,7 @@
     animation: flicker 3s steps(1) infinite;
   }
   .room.dark .room-label { color: #777; }
+  .room.dark .small { color: #999; }
   @keyframes flicker { 0%, 100% { opacity: 1; } 42% { opacity: 0.4; } 44% { opacity: 1; } 71% { opacity: 0.6; } 72% { opacity: 1; } }
   .room.green .room-bg { filter: hue-rotate(40deg) saturate(2.5); }
   .room.green .room-card { background: rgba(210, 255, 200, 0.88); }
@@ -477,14 +587,6 @@
   }
 
   .words { display: flex; flex-wrap: wrap; justify-content: center; margin: 14px 0; }
-  .tiny-door {
-    border: 0;
-    background: none;
-    font-size: 0.9rem;
-    cursor: pointer;
-    padding: 6px;
-    animation: pop 0.4s ease;
-  }
 
   .pw { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 14px 0; }
   .pw input {
@@ -599,8 +701,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .scroll-hint, .heart, .meter.broken, .pop, .room-card.enter, .room.dark .room-card,
-    .floaty, .kjell, .slot.shake, .tiny-door, .tv-static { animation: none; }
-    .meter-fill, .choices .no, .slot .door, .fallen .floaty, .grow-btn { transition: none; }
+    .floaty, .kjell, .thing.shake, .thing.solo.tiny, .tv-static { animation: none; }
+    .meter-fill, .choices .no, .thing .panel, .fallen .floaty, .grow-btn { transition: none; }
     .echo { animation: none; opacity: var(--o); }
   }
 </style>
@@ -613,27 +715,28 @@
     <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <button class="heart" id="heart" aria-label="Hjerte">💖</button></h1>
     <button class="retired" id="retired">🏖️ Pensjonert. Driver nå kun med tull.</button>
   </div>
-  <div class="scroll-hint">Scroll ned. Velg en dør ↓</div>
+  <div class="scroll-hint">Scroll ned. Åpne ting ↓</div>
 </header>
 
 <main>
   <section class="card">
-    <h2>Diva-<span class="rainbow">kalenderen</span> 🎄</h2>
-    <p>24 dører. Hver av dem gjør noe forskjellig. Jo høyere tall, jo rarere blir det.</p>
-    <p class="small">Noen dører gjemmer hemmeligheter. Noen gjemmer andre dører. Trykk på ting som ser rare ut.</p>
-    <p class="progress"><span id="opened-count">0</span> / 24 dører · <span id="secret-count">0</span> / <span id="secret-total">0</span> hemmeligheter</p>
-    <div class="calendar" id="calendar"></div>
+    <h2>Diva-<span class="rainbow">veggen</span> 🚪</h2>
+    <p>Dører, luker, skuffer, et teppe og en safe. 24 ting som kan åpnes, og hver av dem gjør noe forskjellig. Jo høyere nummer, jo rarere blir det.</p>
+    <p class="small">Noen ting gjemmer hemmeligheter. Noen gjemmer flere ting som kan åpnes. Trykk på det som ser rart ut.</p>
+    <p class="progress"><span id="opened-count">0</span> / 24 åpnet · <span id="secret-count">0</span> / <span id="secret-total">0</span> hemmeligheter</p>
+    <div class="wall" id="wall"></div>
   </section>
 
   <div class="under">
     <button class="ghost" id="trapdoor">Det er ingenting her nede.</button>
-    <p class="reset"><button class="ghost" id="reset">Lukk alle dørene igjen</button></p>
+    <div id="hatch-wrap" hidden></div>
+    <p class="reset"><button class="ghost" id="reset">Lukk alt igjen</button></p>
   </div>
 </main>
 
 <div class="room" id="room" role="dialog" aria-modal="true" aria-labelledby="room-title" hidden>
   <div class="room-bg" id="room-bg"></div>
-  <button class="room-close" id="room-close">✕ Til kalenderen</button>
+  <button class="room-close" id="room-close">✕ Tilbake til veggen</button>
   <section class="card room-card" id="room-card"></section>
   <button class="kjell" id="kjell" aria-label="Kjell" hidden></button>
 </div>
@@ -660,11 +763,11 @@
   const TOTAL_SECRETS = Object.keys(SECRETS).length;
   const state = { opened: [], secrets: [] };
   try {
-    const saved = JSON.parse(localStorage.getItem('diva-kalender'));
+    const saved = JSON.parse(localStorage.getItem('diva-veggen'));
     if (saved && Array.isArray(saved.opened) && Array.isArray(saved.secrets)) Object.assign(state, saved);
   } catch (e) {}
   function save() {
-    try { localStorage.setItem('diva-kalender', JSON.stringify(state)); } catch (e) {}
+    try { localStorage.setItem('diva-veggen', JSON.stringify(state)); } catch (e) {}
   }
   const has = (s) => state.secrets.includes(s);
   function discover(s) {
@@ -711,6 +814,29 @@
     }
   }
 
+  // ---------- Ting som kan åpnes ----------
+  // Hver type åpner seg på sin egen måte (se CSS-en for .t-*)
+  const KINDS = {
+    door: { name: 'Dør', panels: 1, size: 'h2' },
+    double: { name: 'Skapdører', panels: 2, size: 'w2' },
+    drawer: { name: 'Skuff', panels: 1, size: 'w2' },
+    curtain: { name: 'Teppe', panels: 2, size: 'w2 h2' },
+    safe: { name: 'Safe', panels: 1, size: 'h2' },
+    roller: { name: 'Rulleport', panels: 1, size: '' },
+    hatch: { name: 'Luke', panels: 1, size: '' },
+    slide: { name: 'Skyveluke', panels: 1, size: '' },
+    flap: { name: 'Klaff', panels: 1, size: '' },
+    porthole: { name: 'Koøye', panels: 1, size: '' },
+  };
+  const COLORS = ['#e04848', '#e8863a', '#c9a227', '#4caf50', '#3d97d6', '#7e57c2', '#c2410c', '#be3fd6'];
+  function thingInner(kind, inside, plate) {
+    const panels = KINDS[kind].panels === 2 ? '<span class="panel l"></span><span class="panel r"></span>' : '<span class="panel"></span>';
+    return `<span class="inside" aria-hidden="true">${inside}</span>${panels}${plate ? `<span class="plate" aria-hidden="true">${plate}</span>` : ''}`;
+  }
+  // En ting inne i et rom. Med data-go="rom" åpner den seg og tar deg videre dit.
+  const thing = (kind, inside, opts) =>
+    `<button class="thing solo t-${kind}${opts.cls ? ' ' + opts.cls : ''}" aria-label="${opts.label}" ${opts.attrs || ''}>${thingInner(kind, inside, opts.plate)}</button>`;
+
   // ---------- Innhold ----------
   const READINGS = [
     [112, 'Litt over skalaen. Helt normalt for deg.'],
@@ -735,7 +861,7 @@
     'Du er grunnen til at glitter finnes.',
     'Regnbuer ser på deg og tenker: «Ok, litt mye.»',
     'Selv hunden synes du er mye. Og hunden er MYE.',
-    'Kalenderen fikk 24 dører bare fordi én ikke var nok for deg.',
+    'Denne veggen fikk 24 luker bare fordi én ikke var nok for deg.',
   ];
   const CHANNELS = [
     ['diva.jpg', 'NRK Diva', 'Dagsrevyen. Hovedsak: Hunden er fortsatt diva.'],
@@ -743,33 +869,33 @@
     ['sladder.jpg', 'TV Sladder', 'Han vet noe. Direkte, hele døgnet.'],
     ['taco.jpg', 'Matkanalen', 'Taco-fredag. Sendes alle dager.'],
     ['agurk.jpg', 'Spa-TV', 'Agurkbehandling, del 47.'],
-    [null, 'Kanal 404', 'Ingen signal. Bare snø. ❄️'],
+    [null, 'Kanal 404', 'Ingen signal. Bare snø.'],
   ];
   const DOG_LINES = [
     'Hei.',
     'Ja, jeg kan snakke. Ikke vær så overrasket.',
-    'Jeg har sett deg åpne alle disse dørene.',
-    'Det er jeg som har laget dem.',
+    'Jeg har sett deg åpne alle disse lukene og skuffene.',
+    'Det er jeg som har bygget dem.',
     'Jeg er ikke en hund. Jeg er en diva i hundeform.',
     'Ikke si det til noen.',
-    'Spesielt ikke til han i luke 18. Han vet det sikkert allerede.',
+    'Spesielt ikke til han bak nr. 18. Han vet det sikkert allerede.',
     '…',
     'Voff.',
   ];
 
-  // Hvert rom: tittel, bakgrunn, innhold og eventuelt litt oppførsel (init).
-  // init får rommet og en funksjon alive() som sier om rommet fortsatt er åpent.
+  // Hvert rom: hva slags ting som åpnes (kind), tittel, bakgrunn, innhold og eventuelt
+  // litt oppførsel (init). init får rommet og en funksjon alive() som sier om rommet fortsatt er åpent.
   const rooms = {
     1: {
-      icon: '👋', title: 'Velkommen!', bg: img('diva'),
+      kind: 'door', icon: '👋', title: 'Velkommen!', bg: img('diva'),
       html: `
         <p>Gratulerer! Du åpnet en dør.</p>
         <p>Det var egentlig det. Ikke alle dører kan være spennende.</p>
-        <p class="highlight">Tips: Trykk på ting som ser rare ut. Noen dører gjemmer hemmeligheter, og noen gjemmer andre dører.</p>
-        <p class="small">Det blir rarere jo høyere tall du åpner.</p>`,
+        <p class="highlight">Tips: Trykk på ting som ser rare ut. Noen ting gjemmer hemmeligheter, og noen gjemmer flere ting som kan åpnes.</p>
+        <p class="small">Det blir rarere jo høyere nummer du åpner.</p>`,
     },
     2: {
-      icon: '📏', title: 'Diva-o-meter', bg: img('mikke'),
+      kind: 'slide', icon: '📏', title: 'Diva-o-meter', bg: img('mikke'),
       html: `
         <p>Vitenskapelig kalibrert. Garantert presis. Trykk og se.</p>
         <div class="meter"><div class="meter-fill"></div></div>
@@ -801,7 +927,7 @@
       },
     },
     3: {
-      icon: '❓', title: 'Viktig spørsmål', bg: img('sladder'),
+      kind: 'hatch', icon: '❓', title: 'Viktig spørsmål', bg: img('sladder'),
       html: `
         <p class="big">Er du en diva?</p>
         <div class="choices">
@@ -859,7 +985,7 @@
       },
     },
     4: {
-      icon: '🔮', title: 'Dagens diva-energi', bg: 'linear-gradient(160deg, #3a2350, #8a3fa8)',
+      kind: 'porthole', icon: '🔮', title: 'Dagens diva-energi', bg: 'linear-gradient(160deg, #3a2350, #8a3fa8)',
       html: `
         <p>Universet har en beskjed til deg. Trykk for å se hvilken energi du har i dag.</p>
         <figure class="polaroid" hidden>
@@ -890,7 +1016,7 @@
       },
     },
     5: {
-      icon: '📮', title: 'Postkontoret er stengt', bg: 'linear-gradient(160deg, #c0392b, #6e1f2f)',
+      kind: 'flap', icon: '📮', title: 'Postkontoret er stengt', bg: 'linear-gradient(160deg, #c0392b, #6e1f2f)',
       html: `
         <p>Postbudet har levert sin siste melding og sagt opp.</p>
         <p class="highlight">Fra og med i dag må alle meldinger leveres personlig. Takk for forståelsen.</p>
@@ -910,7 +1036,7 @@
       },
     },
     6: {
-      icon: '📜', title: 'Offisielle diva-regler', bg: img('diva'),
+      kind: 'roller', icon: '📜', title: 'Offisielle diva-regler', bg: img('diva'),
       html: `
         <ol class="rules">
           <li>Man går aldri inn i et rom. Man gjør <strong>entré</strong>.</li>
@@ -918,12 +1044,12 @@
           <li>Solbriller er et humør, ikke et tilbehør. 🕶️</li>
           <li>Hydrér. Diva-glød kommer ikke av seg selv. 💧</li>
           <li>Når folk er ass: vær den voksne i rommet. Med perfekt hår.</li>
-          <li>Uansett hva som skjer bak de andre dørene, er hunden fortsatt den største divaen.</li>
-          <li>Ikke åpne luke 14. Den skammer seg.</li>
+          <li>Uansett hva som skjer bak de andre lukene, er hunden fortsatt den største divaen.</li>
+          <li>Ikke åpne nr. 14. Den skammer seg.</li>
         </ol>`,
     },
     7: {
-      icon: '🚨', title: 'Diva-nødknapp', bg: 'linear-gradient(160deg, #f25c5c, #8a3fa8)',
+      kind: 'hatch', icon: '🚨', title: 'Diva-nødluke', bg: 'linear-gradient(160deg, #f25c5c, #8a3fa8)',
       html: `
         <p>Kjedelig dag? For lite glitter i livet? Trykk.</p>
         <p class="center"><button class="btn" data-act="panic">Send diva-forsterkninger</button></p>
@@ -946,7 +1072,7 @@
       },
     },
     8: {
-      icon: '💐', title: 'Kompliment-maskinen', bg: 'linear-gradient(160deg, #f2a65c, #d65cf2)',
+      kind: 'double', icon: '💐', title: 'Kompliment-maskinen', bg: 'linear-gradient(160deg, #f2a65c, #d65cf2)',
       html: `
         <p>Denne maskinen har bare ett program: å si sannheten.</p>
         <p class="result" aria-live="polite"></p>
@@ -961,9 +1087,9 @@
       },
     },
     9: {
-      icon: '🥤', title: 'Hvor er hunden?', bg: 'linear-gradient(160deg, #2e7d5b, #14402d)',
+      kind: 'drawer', icon: '🥤', title: 'Hvor er hunden?', bg: 'linear-gradient(160deg, #2e7d5b, #14402d)',
       html: `
-        <p>Hunden har gjemt seg under en av koppene. Finn den.</p>
+        <p>Skuffen var full av kopper. Hunden har gjemt seg under en av dem. Finn den.</p>
         <div class="cups">
           <button class="cup" aria-label="Kopp 1">🥤</button>
           <button class="cup" aria-label="Kopp 2">🥤</button>
@@ -992,9 +1118,9 @@
       },
     },
     10: {
-      icon: '🐶', title: 'Ikke trykk på hunden', bg: 'linear-gradient(160deg, #5cb8f2, #3a2350)',
+      kind: 'hatch', icon: '🐶', title: 'Ikke trykk på hunden', bg: 'linear-gradient(160deg, #5cb8f2, #3a2350)',
       html: `
-        <p class="result" aria-live="polite">Uansett hva du gjør: ikke trykk på hunden.</p>
+        <p class="result" aria-live="polite">Dette er hundeluka. Uansett hva du gjør: ikke trykk på hunden.</p>
         <div class="grow"><button class="grow-btn" aria-label="Hunden"><img src="diva.jpg" alt="Hunden"></button></div>
         <p class="center"><button class="btn plain" data-act="shrink" hidden>Krymp hunden 🔬</button></p>`,
       init(el) {
@@ -1019,7 +1145,7 @@
       },
     },
     11: {
-      icon: '📺', title: 'Diva-TV', bg: 'linear-gradient(160deg, #1d1d2b, #4b3b6b)',
+      kind: 'double', icon: '📺', title: 'Diva-TV', bg: 'linear-gradient(160deg, #1d1d2b, #4b3b6b)',
       html: `
         <p>Seks kanaler. Null kvalitet. Trykk for å zappe.</p>
         <div class="tv">
@@ -1045,12 +1171,12 @@
       },
     },
     12: {
-      icon: '💨', title: 'Ingenting', bg: 'linear-gradient(160deg, #cfc6d6, #8d8399)',
+      kind: 'drawer', size: '', icon: '💨', title: 'Ingenting', bg: 'linear-gradient(160deg, #cfc6d6, #8d8399)',
       html: `
-        <p>Denne døra er tom.</p>
+        <p>Denne skuffen er tom.</p>
         <p>Helt tom.</p>
         <p class="small">Ingenting å se her. Gå videre.</p>
-        <div class="floor"><button class="dust" aria-label="Noe lite på gulvet"></button></div>
+        <div class="floor"><button class="dust" aria-label="Noe lite i hjørnet av skuffen"></button></div>
         <p class="result" aria-live="polite"></p>`,
       init(el) {
         const dust = el.querySelector('.dust');
@@ -1069,9 +1195,9 @@
       },
     },
     13: {
-      icon: '🌮', title: 'Taco-rommet', bg: img('taco', 'center'),
+      kind: 'roller', icon: '🌮', title: 'Taco-luka', bg: img('taco', 'center'),
       html: `
-        <p>I dette rommet er det taco-fredag. Hver dag. For alltid.</p>
+        <p>Bak denne rulleporten er det taco-fredag. Hver dag. For alltid.</p>
         <p class="center"><button class="btn" data-act="taco">Spis taco 🌮</button></p>
         <p class="result" aria-live="polite"></p>`,
       init(el) {
@@ -1088,16 +1214,16 @@
       },
     },
     14: {
-      icon: '🚪', title: 'Oi', bg: 'linear-gradient(160deg, #6b5b4b, #2e2620)',
+      kind: 'door', icon: '🫣', title: 'Oi', bg: 'linear-gradient(160deg, #6b5b4b, #2e2620)',
       html: `<div class="lines" aria-live="polite"></div>`,
       init(el, alive) {
         const box = el.querySelector('.lines');
         const lines = [
           'Beklager, du har åpnet feil dør.',
-          'Riktig dør er luke 14.',
+          'Riktig dør er nr. 14.',
           '…',
           'Vent litt.',
-          'Dette ER luke 14.',
+          'Dette ER nr. 14.',
           'Denne døra lukker seg nå av ren skam. 🚪',
         ];
         lines.forEach((line, i) => setTimeout(() => {
@@ -1110,12 +1236,12 @@
         setTimeout(() => {
           if (!alive()) return;
           closeRooms();
-          toast('Luke 14 lukket seg selv. Den trenger litt tid alene.');
+          toast('Nr. 14 lukket seg selv. Den trenger litt tid alene.');
         }, lines.length * 1300 + 1800);
       },
     },
     15: {
-      icon: '🥒', title: 'Agurk-spaet', bg: img('agurk', 'center 40%'),
+      kind: 'slide', icon: '🥒', title: 'Agurk-spaet', bg: img('agurk', 'center 40%'),
       html: `
         <p>Velkommen til agurk-spaet. 🥒</p>
         <p class="highlight">Vennligst legg agurkene på øynene. Ikke i munnen. Vi ser på deg.</p>
@@ -1139,9 +1265,9 @@
       },
     },
     16: {
-      icon: '🔑', title: 'Passord, takk', bg: 'linear-gradient(160deg, #2a1838, #1a3a5a)',
+      kind: 'flap', icon: '🔑', title: 'Passord, takk', bg: 'linear-gradient(160deg, #2a1838, #1a3a5a)',
       html: `
-        <p>Denne døra er beskyttet av et passord.</p>
+        <p>En stemme bak klaffen spør etter passordet.</p>
         <form class="pw">
           <input type="text" maxlength="30" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Passord" aria-label="Passord">
           <button class="btn">Lås opp</button>
@@ -1168,7 +1294,7 @@
           const guess = input.value.trim().toLowerCase().replace(/^en\s+/, '').replace(/[!.]+$/, '');
           if (guess === 'diva') {
             form.hidden = true;
-            out.textContent = 'Riktig! 🔑 Du fikk en nøkkel. Den passer kanskje i en dør med et høyere tall …';
+            out.textContent = 'Riktig! 🔑 En nøkkel faller ut av klaffen. Den ser ut som den passer til en safe …';
             discover('nokkel');
             rain(20, ['🔑', '✨']);
           } else {
@@ -1179,7 +1305,7 @@
       },
     },
     17: {
-      icon: '🐭', title: 'Diva-klubbhuset', bg: img('mikke'),
+      kind: 'door', icon: '🐭', title: 'Diva-klubbhuset', bg: img('mikke'),
       html: `
         <p>Velkommen til Diva-klubbhuset! Si de magiske ordene for å komme inn.</p>
         <div class="words">
@@ -1188,10 +1314,10 @@
           <button class="btn plain" data-w="Muska">Muska</button>
         </div>
         <p class="result" aria-live="polite"></p>
-        <p class="center"><button class="tiny-door" aria-label="Bitteliten dør" hidden>🚪</button></p>`,
+        ${thing('door', '', { cls: 'tiny', label: 'Bitteliten dør', attrs: 'data-go="bak" hidden' })}`,
       init(el) {
         const out = el.querySelector('.result');
-        const tiny = el.querySelector('.tiny-door');
+        const tiny = el.querySelector('.tiny');
         const magic = ['Miska', 'Muska', 'Diva!'];
         let said = [];
         if (has('lille-dor')) {
@@ -1211,22 +1337,21 @@
             tiny.hidden = false;
           }
         }));
-        tiny.addEventListener('click', () => openRoom('bak'));
       },
     },
     18: {
-      icon: '👀', title: 'Han vet noe', bg: img('sladder'),
+      kind: 'slide', icon: '👀', title: 'Han vet noe', bg: img('sladder'),
       html: `
-        <p>Mannen i bakgrunnen vet noe.</p>
+        <p>Skyveluka glir opp. Et par øyne ser ut. Han vet noe.</p>
         <p class="result" aria-live="polite"></p>
         <p class="center"><button class="btn" data-act="gossip">Hva vet han? 👀</button></p>`,
       init(el) {
         const out = el.querySelector('.result');
         const facts = () => [
-          `Han vet at du har åpnet ${state.opened.length} av 24 dører.`,
-          'Han vet at nei-knappen i luke 3 aldri har virket.',
+          `Han vet at du har åpnet ${state.opened.length} av 24 ting.`,
+          'Han vet at nei-knappen bak nr. 3 aldri har virket.',
           has('kjell') ? 'Han vet at Kjell følger etter deg.' : 'Han vet om en støvdott du ikke har møtt ennå.',
-          has('nokkel') ? 'Han vet at du har en nøkkel i lomma.' : 'Han vet passordet til luke 16. Han sier det ikke.',
+          has('nokkel') ? 'Han vet at du har en nøkkel i lomma.' : 'Han vet passordet bak nr. 16. Han sier det ikke.',
           has('kjelleren') ? 'Han vet at du har vært i kjelleren. Han sier ingenting.' : 'Han vet hva som er under gulvet.',
           'Han vet at du fortsatt trykker.',
         ];
@@ -1238,11 +1363,11 @@
       },
     },
     19: {
-      icon: '🪐', title: 'Null tyngdekraft', bg: 'linear-gradient(160deg, #0b0b2b, #3a2350)', mood: 'float',
+      kind: 'porthole', icon: '🪐', title: 'Null tyngdekraft', bg: 'linear-gradient(160deg, #0b0b2b, #3a2350)', mood: 'float',
       html: `
         <div class="floaties">
-          <p class="floaty" style="--d: 0s; --r: 3deg">Tyngdekraften i dette rommet er pensjonert.</p>
-          <p class="floaty" style="--d: 0.4s; --r: -4deg">Akkurat som resten av nettsiden.</p>
+          <p class="floaty" style="--d: 0s; --r: 3deg">Du kikket ut av koøyet og havnet i verdensrommet.</p>
+          <p class="floaty" style="--d: 0.4s; --r: -4deg">Tyngdekraften her er pensjonert. Akkurat som resten av nettsiden.</p>
           <p class="floaty big" style="--d: 0.8s; --r: 6deg">🪐 🐶 💅</p>
           <p class="floaty small" style="--d: 1.2s; --r: -2deg">Alt bare … svever.</p>
         </div>
@@ -1260,9 +1385,9 @@
       },
     },
     20: {
-      icon: '🪞', title: 'Speilrommet', bg: img('diva'), mood: 'mirror',
+      kind: 'double', icon: '🪞', title: 'Speilskapet', bg: img('diva'), mood: 'mirror',
       html: `
-        <p>Velkommen til speilrommet.</p>
+        <p>Du åpnet speilskapet og falt inn i det.</p>
         <p>Alt her inne er speilvendt. Dette er ikke en feil.</p>
         <p class="result" aria-live="polite"></p>
         <p class="center"><button class="btn" data-act="flip">Snu rommet 🔄</button></p>`,
@@ -1275,9 +1400,9 @@
       },
     },
     21: {
-      icon: '📢', title: 'Ekko-rommet', bg: 'linear-gradient(160deg, #546e7a, #1c2a30)',
+      kind: 'hatch', icon: '📢', title: 'Ventilasjonsluka', bg: 'linear-gradient(160deg, #546e7a, #1c2a30)',
       html: `
-        <p>Rop noe inn i rommet.</p>
+        <p>Bak luka går det en lang, mørk ventilasjonskanal. Rop noe inn i den.</p>
         <form class="pw">
           <input type="text" maxlength="30" autocomplete="off" placeholder="Hallo?" aria-label="Hva vil du rope?">
           <button class="btn">Rop 📢</button>
@@ -1307,38 +1432,62 @@
       },
     },
     22: {
-      icon: '♾️', title: 'Døra bak døra', bg: 'linear-gradient(160deg, #3a2350, #0b0b2b)',
+      kind: 'door', icon: '🚪', title: 'Døra bak døra', bg: 'linear-gradient(160deg, #3a2350, #0b0b2b)',
       html: `
-        <p class="center"><button class="emoji-btn" data-act="door" aria-label="Åpne døra">🚪</button></p>
-        <p class="result" aria-live="polite">Det er en dør her. Åpne den.</p>`,
-      init(el) {
+        ${thing('door', '🚪', { label: 'Åpne døra', attrs: 'data-act="door"' })}
+        <p class="result" aria-live="polite">Bak døra var det en ny dør. Åpne den.</p>`,
+      init(el, alive) {
         const door = el.querySelector('[data-act=door]');
+        const inside = door.querySelector('.inside');
         const out = el.querySelector('.result');
         const lines = [
-          'Bak døra var det en ny dør.',
-          'Og bak den, en til.',
+          'Bak den var det en til.',
+          'Og en til.',
           'De blir mindre.',
           'Og mindre.',
           'Du føler deg veldig stor nå.',
           'Siste dør. Den er bitteliten.',
         ];
         let opened = 0;
+        let busy = false;
+        let size = 120;
+        function resize() {
+          door.style.width = size + 'px';
+          door.style.height = size * 1.35 + 'px';
+          inside.style.fontSize = size / 3 + 'px';
+        }
+        resize();
         door.addEventListener('click', () => {
-          if (opened < lines.length) {
-            out.textContent = lines[opened++];
-            door.style.fontSize = 4 * Math.pow(0.72, opened) + 'rem';
+          if (busy) return;
+          if (opened === lines.length) {
+            door.hidden = true;
+            out.textContent = has('kjell')
+              ? 'Døra er for liten for deg. Men Kjell får plass! Han går inn … og kommer ut med en sokk. 🧦 Ingen vet hvorfor.'
+              : 'Døra er for liten. Hvis bare du kjente noen som er liten og lodden …';
             return;
           }
-          door.hidden = true;
-          out.textContent = has('kjell')
-            ? 'Døra er for liten for deg. Men Kjell får plass! Han går inn … og kommer ut med en sokk. 🧦 Ingen vet hvorfor.'
-            : 'Døra er for liten. Hvis bare du kjente noen som er liten og lodden …';
+          busy = true;
+          door.classList.add('open');
+          setTimeout(() => {
+            if (!alive()) return;
+            // Bak døra står en ny, mindre dør
+            out.textContent = lines[opened++];
+            size *= 0.72;
+            door.classList.add('snap');
+            door.classList.remove('open');
+            door.style.setProperty('--c', pick(COLORS));
+            resize();
+            void door.offsetWidth;
+            door.classList.remove('snap');
+            busy = false;
+          }, reduceMotion ? 0 : 700);
         });
       },
     },
     23: {
-      icon: '🗣️', title: 'Hunden snakker', bg: img('diva'),
+      kind: 'curtain', icon: '🎤', title: 'Hunden har ordet', bg: img('diva'),
       html: `
+        <p class="small center">Teppet går opp. Hunden står på scenen.</p>
         <p class="bubble" aria-live="polite">…</p>
         <figure class="polaroid"><img src="diva.jpg" alt="Hunden, som snakker"></figure>
         <p class="center"><button class="btn" data-act="listen">Hør på hunden 👂</button></p>`,
@@ -1361,16 +1510,17 @@
       },
     },
     24: {
-      icon: '🏆', title: 'Den store finalen', bg: img('diva'),
+      kind: 'safe', icon: '🏆', title: 'Safen', bg: img('diva'),
       html: `
+        <p>Nøkkelen passet. Safen går opp, og inni ligger det et diplom.</p>
         <div class="diploma">
           <p class="diploma-title">Diplom</p>
           <p>Dette bekrefter at innehaveren er en <strong>offisielt sertifisert diva</strong>.</p>
           <p class="small">Utstedt av: Hunden 🐶<br>Vitne: Kjell (støvdott)</p>
         </div>
         <p class="center small">Date-tilbudet har fortsatt ingen utløpsdato. 🥂</p>
-        <p class="highlight">Men vent … hører du det? Det kommer en lyd fra under gulvet.</p>
-        <p class="center"><button class="btn" data-go="kjelleren">Gå ned 🪜</button></p>`,
+        <p class="highlight">Men vent … safen har ingen bakvegg. Det er en luke der inne, og det kommer en lyd fra den.</p>
+        ${thing('hatch', '🪜', { label: 'Luke bak i safen', attrs: 'data-go="kjelleren"', plate: 'Ned' })}`,
       init() { rain(60); },
     },
 
@@ -1380,8 +1530,8 @@
       html: `
         <p>Du burde egentlig ikke være her.</p>
         <p>Det er her vi lagrer reservedeler: tre ekstra dørhåndtak, et halvt «yaaas» og en «ass» som ble til overs.</p>
-        <p class="highlight">I hjørnet er det en trapp som går ned.</p>
-        <p class="center"><button class="btn" data-go="kjelleren">Gå ned trappa 🪜</button></p>`,
+        <p class="highlight">I gulvet er det en luke.</p>
+        ${thing('hatch', '🪜', { label: 'Luke i gulvet', attrs: 'data-go="kjelleren"', plate: 'Ned' })}`,
       init() { discover('lille-dor'); },
     },
     kjelleren: {
@@ -1389,11 +1539,9 @@
       html: `
         <p>Det er mørkt her nede.</p>
         <p>Veldig mørkt.</p>
-        <p>Du hører noen som tygger. Det høres ut som … agurk?</p>
-        <p class="center">
-          <button class="btn" data-go="agurk">Følg lyden 🥒</button>
-          <button class="btn plain" data-act="flee">Løp opp igjen</button>
-        </p>`,
+        <p>Du hører noen som tygger. Lyden kommer fra et gammelt kjøleskap i hjørnet. Grønnsaksskuffen står på gløtt.</p>
+        ${thing('drawer', '🥒', { label: 'Grønnsaksskuffen', attrs: 'data-go="agurk"', plate: 'Grønnsaker' })}
+        <p class="center"><button class="btn plain" data-act="flee">Løp opp igjen</button></p>`,
       init(el) {
         discover('kjelleren');
         el.querySelector('[data-act=flee]').addEventListener('click', () => {
@@ -1405,10 +1553,11 @@
     agurk: {
       title: 'Agurk-dimensjonen 🥒', bg: img('agurk', 'center 40%'), mood: 'green',
       html: `
-        <p>Velkommen til agurk-dimensjonen.</p>
+        <p>Du krøp inn i grønnsaksskuffen og havnet i agurk-dimensjonen.</p>
         <p>Her er alt agurk. Himmelen er agurk. Gulvet er agurk. Diva-o-meteret viser 🥒 %.</p>
         <p class="highlight">Du er agurk nå. Det går fint. Det går over.</p>
-        <p class="center"><button class="btn" data-go="kontor">Gå enda dypere</button></p>`,
+        <p class="center small">Det står en dør her. Den er laget av agurk.</p>
+        ${thing('door', '💼', { label: 'Agurkdøra', attrs: 'data-go="kontor" style="--c: #3f8f3a"' })}`,
       init() {
         discover('agurk');
         rain(40, ['🥒']);
@@ -1421,13 +1570,14 @@
         <p>Hunden ser opp fra skrivebordet.</p>
         <p class="highlight">«Jeg har ventet på deg.»</p>
         <p class="highlight" data-out></p>
-        <p class="center"><button class="btn" data-go="slutten">Gå til slutten</button></p>`,
+        <p class="center small">Bak skrivebordet henger det et teppe. Det blafrer litt.</p>
+        ${thing('curtain', '🌐', { label: 'Teppet bak skrivebordet', attrs: 'data-go="slutten"' })}`,
       init(el) {
         const n = state.secrets.length;
         const missing = TOTAL_SECRETS - n;
         let comment;
         if (missing === 0) comment = 'Alt. Du har funnet alt. Det er nesten litt skummelt.';
-        else if (missing === 1 && !has('slutten')) comment = 'Bare én igjen. Den er rett foran deg.';
+        else if (missing === 1 && !has('slutten')) comment = 'Bare én igjen. Den er rett bak teppet.';
         else comment = `Det er ${missing} igjen. Noen av dem er rett under nesa di.`;
         el.querySelector('[data-out]').textContent = `«Du har funnet ${n} av ${TOTAL_SECRETS} hemmeligheter. ${comment}»`;
       },
@@ -1436,7 +1586,7 @@
       title: 'Slutten av internett', mood: 'void',
       html: `
         <p>Gratulerer. Du har nådd slutten av internett.</p>
-        <p>Det er ingenting mer her. Ingen flere dører. Bare deg.</p>
+        <p>Det er ingenting mer her. Ingen flere dører. Ingen flere luker. Bare deg.</p>
         <p class="small" data-kjell></p>
         <p data-out></p>
         <p class="center"><button class="btn" data-act="restart">Tilbake til start</button></p>`,
@@ -1466,13 +1616,20 @@
   const kjellEl = document.getElementById('kjell');
   let roomToken = 0;
 
+  // Åpner en ting, og gjør noe når den har åpnet seg
+  function openThen(el, fn) {
+    if (el.classList.contains('open')) return;
+    el.classList.add('open');
+    setTimeout(fn, reduceMotion ? 0 : 650);
+  }
+
   function render(id) {
     const r = rooms[id];
     const token = ++roomToken;
     const alive = () => token === roomToken && !roomEl.hidden;
     roomEl.className = 'room' + (r.mood ? ' ' + r.mood : '');
     roomBg.style.background = r.bg || '';
-    const label = typeof id === 'number' ? `Luke ${id}` : 'Hemmelig sted';
+    const label = typeof id === 'number' ? `Nr. ${id} · ${KINDS[r.kind].name}` : 'Hemmelig sted';
     roomCard.innerHTML = `<p class="room-label">${label}</p><h2 id="room-title">${r.title}</h2>${r.html}`;
     roomEl.hidden = false;
     roomEl.scrollTop = 0;
@@ -1481,7 +1638,10 @@
     roomCard.classList.remove('enter');
     void roomCard.offsetWidth;
     roomCard.classList.add('enter');
-    roomCard.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => openRoom(b.dataset.go)));
+    roomCard.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => {
+      if (!b.classList.contains('thing')) return openRoom(b.dataset.go);
+      openThen(b, () => { if (alive()) openRoom(b.dataset.go); });
+    }));
     if (r.init) r.init(roomCard, alive);
     if (typeof id === 'number') markOpened(id);
     roomClose.focus({ preventScroll: true });
@@ -1492,6 +1652,7 @@
     roomToken++;
     roomEl.hidden = true;
     document.body.classList.remove('in-room');
+    trapHatch.classList.remove('open');
     if (afterClose) { afterClose(); afterClose = null; }
   }
 
@@ -1526,38 +1687,34 @@
   ];
   kjellEl.addEventListener('click', () => toast(pick(KJELL_LINES)));
 
-  // ---------- Kalenderen ----------
-  const ORDER = [7, 15, 2, 20, 11, 4, 18, 1, 23, 9, 13, 6, 22, 3, 16, 10, 24, 5, 12, 19, 8, 14, 21, 17];
-  const COLORS = ['#e04848', '#e8863a', '#c9a227', '#4caf50', '#3d97d6', '#7e57c2', '#c2410c', '#be3fd6'];
-  const calendar = document.getElementById('calendar');
-  const slots = {};
+  // ---------- Veggen ----------
+  // Rekkefølgen er valgt så veggen blir helt fylt både med 4 og 6 kolonner
+  const ORDER = [12, 18, 7, 4, 1, 3, 6, 15, 17, 19, 22, 21, 2, 5, 10, 11, 14, 24, 23, 13, 9, 16, 8, 20];
+  const wall = document.getElementById('wall');
+  const things = {};
   ORDER.forEach((n, i) => {
-    const slot = document.createElement('button');
-    slot.className = 'slot';
-    slot.style.setProperty('--c', COLORS[i % COLORS.length]);
-    slot.setAttribute('aria-label', `Luke ${n}`);
-    slot.innerHTML = `<span class="behind" aria-hidden="true">${rooms[n].icon}</span><span class="door" aria-hidden="true">${n}</span>`;
-    slot.addEventListener('click', () => openDoor(n));
-    calendar.appendChild(slot);
-    slots[n] = slot;
+    const r = rooms[n];
+    const el = document.createElement('button');
+    el.className = `thing t-${r.kind} ${r.size ?? KINDS[r.kind].size}`.trim();
+    el.style.setProperty('--c', COLORS[i % COLORS.length]);
+    el.innerHTML = thingInner(r.kind, r.icon, n);
+    el.addEventListener('click', () => openThing(n));
+    wall.appendChild(el);
+    things[n] = el;
   });
 
-  function openDoor(n) {
-    const slot = slots[n];
+  function openThing(n) {
+    const el = things[n];
     if (n === 24 && !has('nokkel')) {
-      slot.classList.remove('shake');
-      void slot.offsetWidth;
-      slot.classList.add('shake');
-      toast('🔒 Låst. Passordet finnes bak en annen dør.');
+      el.classList.remove('shake');
+      void el.offsetWidth;
+      el.classList.add('shake');
+      toast('🔒 Safen er låst. Nøkkelen ligger bak noe annet.');
       return;
     }
-    const first = state.opened.length === 0;
-    const already = slot.classList.contains('open');
-    slot.classList.add('open');
-    setTimeout(() => {
-      openRoom(n);
-      if (first && new Date().getMonth() !== 11) toast('Det er ikke desember ennå … men greit da. 🎄');
-    }, already || reduceMotion ? 0 : 450);
+    const already = el.classList.contains('open');
+    el.classList.add('open');
+    setTimeout(() => openRoom(n), already || reduceMotion ? 0 : 550);
   }
 
   function markOpened(n) {
@@ -1573,10 +1730,13 @@
     document.getElementById('secret-count').textContent = state.secrets.length;
     document.getElementById('secret-total').textContent = TOTAL_SECRETS;
     ORDER.forEach((n) => {
-      slots[n].classList.toggle('open', state.opened.includes(n));
-      slots[n].setAttribute('aria-label', `Luke ${n}${state.opened.includes(n) ? ' (åpnet)' : ''}`);
+      const opened = state.opened.includes(n);
+      things[n].classList.toggle('open', opened);
+      things[n].setAttribute('aria-label', `Nr. ${n}, ${KINDS[rooms[n].kind].name}${opened ? ' (åpnet)' : ''}`);
     });
-    slots[24].classList.toggle('locked', !has('nokkel'));
+    const locked = !has('nokkel');
+    things[24].classList.toggle('locked', locked);
+    things[24].querySelector('.plate').textContent = locked ? '24 🔒' : '24';
   }
   updateProgress();
 
@@ -1615,43 +1775,28 @@
     if (retiredTaps === 3) discover('pensjonist');
   });
 
+  // Nederst på siden: «ingenting» … helt til det plutselig er en luke der
   const trapdoor = document.getElementById('trapdoor');
-  const trapLines = ['Det er ingenting her nede.', 'Seriøst. Ingenting.', 'Ok. Det er en luke. 🕳️ Trykk igjen hvis du tør.'];
+  const hatchWrap = document.getElementById('hatch-wrap');
+  hatchWrap.innerHTML = thing('hatch', '🕳️', { label: 'Luke i gulvet' });
+  const trapHatch = hatchWrap.firstElementChild;
+  const trapLines = ['Det er ingenting her nede.', 'Seriøst. Ingenting.', 'Ok. Det er en luke her.'];
   let trapTaps = 0;
   trapdoor.addEventListener('click', () => {
-    trapTaps++;
-    if (trapTaps < trapLines.length) {
-      trapdoor.textContent = trapLines[trapTaps];
-      return;
-    }
-    trapTaps = 0;
-    trapdoor.textContent = trapLines[0];
-    openRoom('kjelleren');
+    trapTaps = Math.min(trapTaps + 1, trapLines.length - 1);
+    trapdoor.textContent = trapLines[trapTaps];
+    if (trapTaps === trapLines.length - 1) hatchWrap.hidden = false;
   });
+  trapHatch.addEventListener('click', () => openThen(trapHatch, () => openRoom('kjelleren')));
 
   document.getElementById('reset').addEventListener('click', () => {
-    if (!confirm('Lukke alle dørene og glemme alle hemmelighetene?')) return;
+    if (!confirm('Lukke alt og glemme alle hemmelighetene?')) return;
     state.opened = [];
     state.secrets = [];
     save();
     updateProgress();
-    toast('Alle dørene er lukket. Kjell er tilbake under teppet.');
+    toast('Alt er lukket igjen. Kjell er tilbake under teppet.');
   });
-
-  // ---------- Snø ----------
-  if (!reduceMotion) {
-    for (let i = 0; i < 16; i++) {
-      const f = document.createElement('span');
-      f.className = 'flake';
-      f.setAttribute('aria-hidden', 'true');
-      f.textContent = '❄';
-      f.style.left = Math.random() * 100 + 'vw';
-      f.style.fontSize = 0.7 + Math.random() * 0.8 + 'rem';
-      f.style.animationDuration = 8 + Math.random() * 8 + 's';
-      f.style.animationDelay = -Math.random() * 16 + 's';
-      document.body.appendChild(f);
-    }
-  }
 </script>
 </body>
 </html>
