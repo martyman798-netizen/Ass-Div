@@ -8,7 +8,7 @@
 <meta property="og:description" content="Dører, luker, skuffer, et lykkehjul og en safe. 32 ting som kan åpnes. Det blir rarere.">
 <meta property="og:image" content="diva.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
   :root {
     --card: rgba(255, 255, 255, 0.86);
@@ -96,6 +96,52 @@
     transform: rotate(-2deg);
     cursor: pointer;
   }
+  .badday {
+    border: 0;
+    background: var(--card);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1rem;
+    color: #c2185b;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  /* Lappene med komplimenter */
+  .note {
+    position: relative;
+    margin: 10px 0 20px;
+    padding: 14px 16px 12px;
+    border-radius: 4px;
+    background: #fffdf3;
+    color: #2a1838;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: rotate(-1deg);
+  }
+  .note::before {
+    content: "";
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 70px;
+    height: 18px;
+    margin-left: -35px;
+    background: rgba(255, 214, 102, 0.75);
+    transform: rotate(2deg);
+  }
+  .note-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #c2185b;
+  }
+  .note p { margin: 4px 0 0; font-family: "Caveat", cursive; font-size: 1.65rem; line-height: 1.2; }
+
   .scroll-hint {
     background: var(--card);
     backdrop-filter: blur(6px);
@@ -936,6 +982,7 @@
   <div class="hero-top">
     <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <button class="heart" id="heart" aria-label="Hjerte">💖</button></h1>
     <button class="retired" id="retired">🏖️ Pensjonert. Driver nå kun med tull.</button>
+    <button class="badday" id="badday">💌 Har du en dårlig dag? Trykk her.</button>
   </div>
   <div class="scroll-hint">Scroll ned. Åpne ting ↓</div>
 </header>
@@ -945,6 +992,7 @@
     <h2>Diva-<span class="rainbow">veggen</span> 🚪</h2>
     <p>Dører, luker, skuffer, vinduer, pakker, en glidelås, et teppe og en safe. 32 ting som kan åpnes, og hver av dem gjør noe forskjellig. Jo høyere nummer, jo rarere blir det.</p>
     <p class="small">Noen ting gjemmer hemmeligheter. Noen gjemmer flere ting som kan åpnes. Trykk på det som ser rart ut.</p>
+    <p class="small">Og bak hver eneste ting ligger det en liten lapp til deg. 💌</p>
     <p class="progress"><span id="opened-count">0</span> / <span id="thing-total">0</span> åpnet · <span id="secret-count">0</span> / <span id="secret-total">0</span> hemmeligheter</p>
     <div class="wall" id="wall"></div>
   </section>
@@ -1179,6 +1227,43 @@
     '…',
     'Voff.',
   ];
+  // Lappene bak hver ting, i nummerrekkefølge (nr. 1 først). Til dagene som er litt tunge.
+  const NOTES = [
+    'Velkommen hit. Uansett hvordan dagen har vært: Det er så fint at du er akkurat deg.',
+    'Du scorer 100 % på alt som betyr noe: snill, morsom, klok og helt deg.',
+    'Ja, du er en diva. Den beste typen: den som får alle rundt seg til å skinne litt mer.',
+    'Dagens energi, uansett hva universet sier: Du er sterkere enn du tror.',
+    'Denne meldingen leverer jeg gjerne personlig: Du er elsket. Hver eneste dag.',
+    'Den viktigste regelen av alle: Vær snill med deg selv i dag. Du fortjener det.',
+    'Nødhjelp: Du har kommet deg gjennom hver eneste tøffe dag så langt. Du klarer denne også.',
+    'Maskinen her inne tuller mye. Denne lappen gjør ikke det: Du er fantastisk.',
+    'Uansett hvor du gjemmer deg, blir jeg like glad hver gang jeg finner deg.',
+    'Du har et hjerte som er minst like stort som hunden når den er på sitt største.',
+    'Hvis livet var en TV-serie, ville du vært hovedpersonen alle heier på.',
+    'Denne skuffen er tom. Hjertet mitt er fullt av deg.',
+    'Du gjør helt vanlige dager til noe å glede seg til. Litt som taco-fredag, bare bedre.',
+    'Du åpnet ikke feil dør. Det finnes ingen feil dør når det er du som åpner den.',
+    'Pust ut. Drikk litt vann. Du trenger ikke å fikse alt i dag.',
+    'Passordet til hjertet mitt er også «diva». Du har hatt det hele tiden.',
+    'Du får folk til å føle seg velkomne, akkurat som et klubbhus. Bare mye kulere.',
+    'Han vet noe: at du er elsket. Det er strengt tatt ikke en hemmelighet.',
+    'Når det føles som om alt faller: Jeg holder deg.',
+    'Hvis du ser deg i speilet i dag: Det du ser, er noen som er vakker, både utenpå og inni.',
+    'Det jeg ville ropt inn i alle ventilasjonskanaler: Du er fantastisk!',
+    'Bak hver eneste dør her ligger det samme: at jeg er glad i deg.',
+    'Hunden har ordet, men jeg vil bare si én ting: Du er favoritten min.',
+    'Det var ikke flaks at jeg fikk deg. Det var jackpot.',
+    'Tre av tre: snill, morsom og vakker. Du vant.',
+    'Pop en boble for hver ting som er tungt i dag. Resten bærer vi sammen.',
+    'Du er like fin uten krone. Men den kler deg.',
+    'Spådom: Det kommer bedre dager. Og jeg skal være der for alle sammen.',
+    'Svaret er ja: Du er god nok. Du har alltid vært god nok.',
+    'Hvis jeg kunne rope én ting så hele nabolaget hørte det: Jeg er så glad i deg!',
+    'Trykk heller på meg enn på knappen. Jeg er veldig god på klemmer.',
+    'Det mest verdifulle i denne safen er ikke diplomet. Det er deg.',
+  ];
+  const noteHTML = (text) => `<div class="note"><span class="note-label">Til deg 💌</span><p>${text}</p></div>`;
+
   // Lykkehjulet: emoji, navn og hva som skjer når hjulet stopper der
   const WHEEL = [
     ['🥒', 'Agurk', (out) => { out.textContent = 'Du vant en agurk. Gratulerer?'; rain(30, ['🥒']); }],
@@ -2361,6 +2446,30 @@
         el.querySelector('[data-out]').textContent = `«Du har funnet ${n} av ${TOTAL_SECRETS} hemmeligheter. ${comment}»`;
       },
     },
+    // Fra knappen øverst på forsiden: en tilfeldig lapp, uten å måtte lete
+    dag: {
+      label: 'Når dagen er tung', title: 'En liten lapp 💌', bg: 'linear-gradient(160deg, #f8bbd0, #b14fd6)',
+      html: `
+        <div class="note"><span class="note-label">Til deg 💌</span><p data-note></p></div>
+        <p class="small center">Det er lov å ha dårlige dager. Og hvis det fortsatt er tungt: Kom og få en klem.</p>
+        <p class="center"><button class="btn" data-act="another">En lapp til 💌</button></p>`,
+      init(el) {
+        const note = el.querySelector('.note');
+        const text = el.querySelector('[data-note]');
+        let last = -1;
+        function next() {
+          let i;
+          do { i = Math.floor(Math.random() * NOTES.length); } while (i === last);
+          last = i;
+          text.textContent = NOTES[i];
+          note.classList.remove('pop');
+          void note.offsetWidth;
+          note.classList.add('pop');
+        }
+        el.querySelector('[data-act=another]').addEventListener('click', next);
+        next();
+      },
+    },
     slutten: {
       title: 'Slutten av internett', mood: 'void',
       html: `
@@ -2411,8 +2520,10 @@
     const alive = () => token === roomToken && !roomEl.hidden;
     roomEl.className = 'room' + (r.mood ? ' ' + r.mood : '');
     roomBg.style.background = r.bg || '';
-    const label = typeof id === 'number' ? `Nr. ${id} · ${KINDS[r.kind].name}` : 'Hemmelig sted';
-    roomCard.innerHTML = `<p class="room-label">${label}</p><h2 id="room-title">${r.title}</h2>${r.html}`;
+    const numbered = typeof id === 'number';
+    const label = r.label || (numbered ? `Nr. ${id} · ${KINDS[r.kind].name}` : 'Hemmelig sted');
+    const note = numbered ? noteHTML(NOTES[id - 1]) : '';
+    roomCard.innerHTML = `<p class="room-label">${label}</p><h2 id="room-title">${r.title}</h2>${note}${r.html}`;
     roomEl.hidden = false;
     roomEl.scrollTop = 0;
     document.body.classList.add('in-room');
@@ -2542,6 +2653,8 @@
       }, 3000);
     }
   });
+
+  document.getElementById('badday').addEventListener('click', () => openRoom('dag'));
 
   const retired = document.getElementById('retired');
   const retiredLines = [
