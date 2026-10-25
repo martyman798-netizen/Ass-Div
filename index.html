@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yaaaasss diva</title>
-<meta property="og:title" content="Yaaaasss diva 💅">
-<meta property="og:description" content="Offisielt pensjonert. Driver nå kun med tull.">
+<title>Diva-veggen</title>
+<meta property="og:title" content="Diva-veggen 💅">
+<meta property="og:description" content="Dører, luker, skuffer og en safe. 24 ting som kan åpnes. Det blir rarere.">
 <meta property="og:image" content="diva.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --card: rgba(255, 255, 255, 0.82);
+    --card: rgba(255, 255, 255, 0.86);
     --ink: #2a1838;
     --muted: #5b4a68;
     --accent: #b14fd6;
@@ -25,22 +25,17 @@
     line-height: 1.5;
     overflow-x: hidden;
   }
+  body.in-room { overflow: hidden; }
+  button { font: inherit; color: inherit; }
+  [hidden] { display: none !important; }
 
-  /* Bildene ligger fast i bakgrunnen (fungerer også på iPhone) og bytter når du scroller */
+  /* Hunden ligger fast i bakgrunnen (fungerer også på iPhone) */
   .bg {
     position: fixed;
     inset: 0;
-    background: center 30% / cover no-repeat;
+    background: url("diva.jpg") center 30% / cover no-repeat;
     z-index: -1;
-    opacity: 0;
-    transition: opacity 0.8s ease;
   }
-  .bg.active { opacity: 1; }
-  .bg-diva { background-image: url("diva.jpg"); }
-  .bg-mikke { background-image: url("mikke.jpg"); }
-  .bg-sladder { background-image: url("sladder.jpg"); }
-  .bg-taco { background-image: url("taco.jpg"); background-position: center; }
-  .bg-agurk { background-image: url("agurk.jpg"); background-position: center 40%; }
 
   .rainbow {
     background: linear-gradient(90deg, #f25c5c, #f2a65c, #e8d24a, #6cc96c, #5cb8f2, #9a6cf2, #d65cf2);
@@ -77,7 +72,20 @@
     text-align: center;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
   }
+  .heart {
+    display: inline-block;
+    border: 0;
+    background: none;
+    padding: 0;
+    font-size: 1em;
+    line-height: 1;
+    cursor: pointer;
+    transition: font-size 0.2s ease;
+    animation: beat 1.2s ease-in-out infinite;
+  }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.25); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } }
   .retired {
+    border: 0;
     background: #2a1838;
     color: #fff;
     padding: 6px 16px;
@@ -86,9 +94,8 @@
     font-size: 0.95rem;
     text-align: center;
     transform: rotate(-2deg);
+    cursor: pointer;
   }
-  .heart { display: inline-block; animation: beat 1.2s ease-in-out infinite; }
-  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.25); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } }
   .scroll-hint {
     background: var(--card);
     backdrop-filter: blur(6px);
@@ -103,9 +110,9 @@
   @keyframes bob { 50% { transform: translateY(8px); } }
 
   main {
-    max-width: 640px;
+    max-width: 680px;
     margin: 0 auto;
-    padding: 0 16px 40vh;
+    padding: 0 16px 30vh;
   }
 
   .card {
@@ -113,15 +120,9 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 24px;
-    padding: 28px 24px;
-    margin: 0 0 50vh;
+    padding: 28px 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
   }
-  .card.visible { opacity: 1; transform: none; }
-  .card:last-child { margin-bottom: 0; }
 
   h2 {
     font-size: clamp(1.7rem, 6vw, 2.3rem);
@@ -131,24 +132,13 @@
   p { margin: 0 0 12px; font-size: 1.12rem; }
   p:last-child { margin-bottom: 0; }
   .small { color: var(--muted); font-size: 0.98rem; }
+  .center { text-align: center; }
   .big {
     font-size: clamp(1.6rem, 6vw, 2.2rem);
     font-weight: 800;
     line-height: 1.2;
     text-align: center;
   }
-
-  .vs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    text-align: center;
-    margin: 18px 0;
-    font-weight: 700;
-  }
-  .vs div { background: #fff; border-radius: 16px; padding: 12px 8px; }
-  .vs b { display: block; font-size: 1.6rem; }
-
   .highlight {
     background: rgba(255,255,255,0.7);
     border-left: 5px solid var(--accent);
@@ -157,14 +147,16 @@
     margin: 16px 0;
     font-weight: 700;
   }
+  .result { min-height: 1.5em; text-align: center; font-weight: 700; }
+  .result strong { font-size: 1.6rem; display: block; }
 
   .btn {
-    font: inherit;
     font-weight: 800;
     font-size: 1.15rem;
     border: 0;
     border-radius: 999px;
     padding: 10px 24px;
+    margin: 4px;
     color: #fff;
     background: linear-gradient(90deg, #f25c5c, #d65cf2, #5cb8f2);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
@@ -173,7 +165,301 @@
   }
   .btn:active { transform: scale(0.96); }
   .btn.plain { background: #fff; color: var(--ink); }
-  .center { text-align: center; }
+
+  .progress {
+    display: inline-block;
+    background: #2a1838;
+    color: #fff;
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- Veggen med ting som kan åpnes ---------- */
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 84px;
+    grid-auto-flow: dense;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  @media (min-width: 560px) { .wall { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 96px; } }
+  .w2 { grid-column: span 2; }
+  .h2 { grid-row: span 2; }
+
+  .thing {
+    position: relative;
+    border: 0;
+    padding: 0;
+    background: none;
+    border-radius: 10px;
+    perspective: 600px;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .thing .inside {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: grid;
+    place-items: center;
+    border-radius: inherit;
+    overflow: hidden;
+    font-size: 1.9rem;
+    background: radial-gradient(circle, #fff3c4 0%, #f2a65c 55%, #6e2f8a 100%);
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.55);
+  }
+  .thing .panel {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background: var(--c, #7e57c2);
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.3), 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+  .thing .panel::after { content: ""; position: absolute; background: rgba(255, 255, 255, 0.85); }
+  .thing .plate {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding: 0 7px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+  }
+  @media (hover: hover) { .thing:not(.open):hover .panel { filter: brightness(1.12); } }
+  .thing.shake { animation: shake 0.4s ease-in-out 2; }
+  .thing.snap .panel { transition: none; }
+  @keyframes shake { 25% { transform: translateX(-6px) rotate(-1deg); } 75% { transform: translateX(6px) rotate(1deg); } }
+
+  /* Dør: svinger ut fra venstre */
+  .t-door .panel { transform-origin: left center; }
+  .t-door .panel::after { right: 12%; top: 50%; width: 8px; height: 8px; border-radius: 50%; }
+  .t-door.open .panel { transform: rotateY(-75deg); }
+
+  /* Skapdører: to halvdeler */
+  .t-double .panel.l { right: 50%; transform-origin: left center; border-radius: 10px 0 0 10px; }
+  .t-double .panel.r { left: 50%; transform-origin: right center; border-radius: 0 10px 10px 0; }
+  .t-double .panel::after { top: 50%; width: 6px; height: 18px; margin-top: -9px; border-radius: 3px; }
+  .t-double .panel.l::after { right: 7px; }
+  .t-double .panel.r::after { left: 7px; }
+  .t-double.open .panel.l { transform: rotateY(-80deg); }
+  .t-double.open .panel.r { transform: rotateY(80deg); }
+
+  /* Luke: hengslet oppe, løftes opp */
+  .t-hatch .panel { transform-origin: center top; }
+  .t-hatch .panel::after { left: 50%; bottom: 10px; width: 26px; height: 6px; margin-left: -13px; border-radius: 3px; }
+  .t-hatch.open .panel { transform: rotateX(75deg); }
+
+  /* Klaff: hengslet nede, faller ned (som en brevsprekk) */
+  .t-flap .panel { transform-origin: center bottom; }
+  .t-flap .panel::after { left: 20%; right: 20%; top: 12px; height: 6px; border-radius: 3px; background: rgba(0, 0, 0, 0.35); }
+  .t-flap.open .panel { transform: rotateX(-75deg); }
+
+  /* Skyveluke: glir til siden og inn i veggen */
+  .t-slide { overflow: hidden; }
+  .t-slide .panel {
+    background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 3px, transparent 3px 7px) 6px 0 / 20px 100% no-repeat, var(--c, #7e57c2);
+  }
+  .t-slide.open .panel { transform: translateX(86%); }
+
+  /* Skuff: trekkes ut, så du ser ned i den */
+  .t-drawer { overflow: hidden; }
+  .t-drawer .inside { place-items: start center; padding-top: 4px; font-size: 1.6rem; background: linear-gradient(#2b1d14, #5a3d2a); }
+  .t-drawer .panel { background: linear-gradient(180deg, #c58b57, #8b5a2b); }
+  .t-drawer .panel::after { left: 50%; top: 50%; width: 36px; height: 8px; margin: -4px 0 0 -18px; border-radius: 4px; background: #f3e2c7; }
+  .t-drawer.open .panel { transform: translateY(55%); box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.4); }
+
+  /* Teppe: to halvdeler som trekkes til side */
+  .t-curtain::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    top: -5px;
+    height: 12px;
+    z-index: 2;
+    border-radius: 6px;
+    background: linear-gradient(#e8c65a, #a8841c);
+  }
+  .t-curtain .panel {
+    background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0 5px, rgba(255, 255, 255, 0.08) 5px 9px, transparent 9px 16px), var(--c2, #b0213a);
+  }
+  .t-curtain .panel::after { display: none; }
+  .t-curtain .panel.l { right: 50%; transform-origin: left center; border-radius: 10px 0 0 10px; }
+  .t-curtain .panel.r { left: 50%; transform-origin: right center; border-radius: 0 10px 10px 0; }
+  .t-curtain.open .panel { transform: scaleX(0.16); }
+
+  /* Rulleport: ruller opp */
+  .t-roller { overflow: hidden; }
+  .t-roller .panel {
+    background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0 2px, rgba(255, 255, 255, 0.14) 2px 4px, transparent 4px 10px), var(--c, #7e57c2);
+  }
+  .t-roller .panel::after { left: 50%; bottom: 6px; width: 22px; height: 6px; margin-left: -11px; border-radius: 3px; }
+  .t-roller.open .panel { transform: translateY(-88%); }
+
+  /* Koøye: rundt vindu med metallring */
+  .t-porthole .inside, .t-porthole .panel {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+  }
+  .t-porthole::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 76px;
+    height: 76px;
+    margin: -38px 0 0 -38px;
+    z-index: 2;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle at 35% 35%, #eef2f5, #8a949d 70%, #5f6870);
+    -webkit-mask: radial-gradient(circle, transparent 0 29px, #000 30px);
+    mask: radial-gradient(circle, transparent 0 29px, #000 30px);
+  }
+  .t-porthole .panel {
+    background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85), rgba(150, 195, 230, 0.75) 40%, #3d6680 100%);
+    transform-origin: left center;
+  }
+  .t-porthole .panel::after { display: none; }
+  .t-porthole.open .panel { transform: rotateY(-80deg); }
+
+  /* Safe: tung dør med hjul */
+  .t-safe .panel { background: linear-gradient(145deg, #6b7380, #353a42); transform-origin: left center; transition-duration: 1s; }
+  .t-safe .panel::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 38px;
+    height: 38px;
+    margin: -19px 0 0 -19px;
+    border-radius: 50%;
+    border: 3px solid #222;
+    background: radial-gradient(circle, #ddd 0 22%, #888 23% 62%, #555 63%);
+  }
+  .t-safe .panel::after { right: 10px; top: 50%; width: 8px; height: 28px; margin-top: -14px; border-radius: 4px; background: #c9a227; }
+  .t-safe.open .panel { transform: rotateY(-80deg); }
+
+  /* Ting inne i rommene */
+  .thing.solo { display: block; width: 150px; height: 110px; margin: 16px auto 8px; }
+  .thing.solo.t-door { width: 110px; height: 160px; }
+  .thing.solo.t-drawer { width: 200px; height: 90px; }
+  .thing.solo.t-curtain { width: 200px; height: 150px; }
+  .thing.solo.tiny { width: 26px; height: 38px; border-radius: 4px; margin-top: 4px; animation: pop 0.4s ease; }
+  .thing.solo.tiny .panel::after { width: 4px; height: 4px; }
+
+  .under { margin-top: 50vh; text-align: center; }
+  .ghost {
+    border: 0;
+    background: none;
+    color: rgba(255, 255, 255, 0.75);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .reset { margin-top: 30vh; font-size: 0.85rem; }
+
+  /* ---------- Rommene bak tingene ---------- */
+  .room {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 76px 16px 60px;
+  }
+  .room-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #3a2350;
+  }
+  .room-close {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 22;
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-weight: 800;
+    background: var(--card);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+  }
+  .room-card {
+    width: 100%;
+    max-width: 560px;
+  }
+  .room-card.enter { animation: enter 0.45s ease; }
+  @keyframes enter { from { transform: scale(0.85) translateY(30px); opacity: 0; } }
+  .room-label {
+    margin: 0 0 4px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+
+  /* Rare rom */
+  .room.mirror .room-card, .room.mirror .room-bg { transform: scaleX(-1); }
+  .room.dark .room-bg { background: #000; }
+  .room.dark .room-card {
+    background: rgba(25, 20, 30, 0.92);
+    color: #ddd;
+    animation: flicker 3s steps(1) infinite;
+  }
+  .room.dark .room-label { color: #777; }
+  .room.dark .small { color: #999; }
+  @keyframes flicker { 0%, 100% { opacity: 1; } 42% { opacity: 0.4; } 44% { opacity: 1; } 71% { opacity: 0.6; } 72% { opacity: 1; } }
+  .room.green .room-bg { filter: hue-rotate(40deg) saturate(2.5); }
+  .room.green .room-card { background: rgba(210, 255, 200, 0.88); }
+  .room.void .room-bg { background: #fff; }
+  .room.void .room-card {
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    text-align: center;
+    color: #999;
+    padding-top: 20vh;
+  }
+  .room.void .room-label { color: #ccc; }
+  .room.void .small { color: #bbb; }
+  .room.float .room-card { overflow: hidden; }
+  .floaty { animation: float 3s ease-in-out infinite alternate; animation-delay: var(--d); }
+  @keyframes float {
+    from { transform: translateY(-6px) rotate(calc(var(--r) * -1)); }
+    to { transform: translateY(10px) rotate(var(--r)); }
+  }
+  .fallen .floaty {
+    animation: none;
+    transform: translateY(110vh) rotate(calc(var(--r) * 8));
+    transition: transform 1.2s cubic-bezier(0.5, 0, 1, 1);
+    transition-delay: var(--d);
+  }
 
   /* Diva-o-meter */
   .meter {
@@ -190,9 +476,6 @@
     transition: width 1.4s cubic-bezier(.2, .8, .2, 1);
   }
   .meter.broken { animation: shake 0.4s ease-in-out 3; }
-  @keyframes shake { 25% { transform: translateX(-6px) rotate(-1deg); } 75% { transform: translateX(6px) rotate(1deg); } }
-  .result { min-height: 3.2em; text-align: center; font-weight: 700; }
-  .result strong { font-size: 1.6rem; display: block; }
 
   /* Ja/Nei med en nei-knapp som stikker av */
   .choices {
@@ -200,11 +483,11 @@
     height: 150px;
     margin-top: 12px;
   }
-  .choices .btn { position: absolute; top: 50px; }
-  #yes { left: 12%; }
-  #no { left: 58%; transition: left 0.25s ease, top 0.25s ease; }
+  .choices .btn { position: absolute; top: 50px; margin: 0; }
+  .choices .yes { left: 12%; }
+  .choices .no { left: 58%; transition: left 0.25s ease, top 0.25s ease; }
 
-  /* Dagens diva-energi */
+  /* Polaroid-bilder */
   .polaroid {
     --tilt: -3deg;
     background: #fff;
@@ -212,142 +495,313 @@
     border-radius: 6px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     margin: 18px auto;
-    max-width: 320px;
+    max-width: 300px;
     transform: rotate(var(--tilt));
   }
   .polaroid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; }
-  .polaroid figcaption { margin-top: 10px; font-weight: 700; text-align: center; line-height: 1.3; }
-  .polaroid.pop { animation: pop 0.4s ease; }
-  @keyframes pop { from { transform: rotate(var(--tilt)) scale(0.6); opacity: 0; } }
+  .polaroid figcaption { margin-top: 10px; font-weight: 700; text-align: center; line-height: 1.3; color: var(--ink); }
+  .pop { animation: pop 0.4s ease; }
+  @keyframes pop { from { transform: rotate(var(--tilt, 0deg)) scale(0.6); opacity: 0; } }
 
   ol.rules { margin: 0; padding-left: 1.4em; font-size: 1.12rem; }
   ol.rules li { margin-bottom: 10px; }
   ol.rules li::marker { font-weight: 800; color: var(--accent); }
 
-  /* Emoji-regn */
+  .emoji-btn {
+    border: 0;
+    background: none;
+    font-size: 4rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .letter {
+    background: #fffdf3;
+    border: 1px dashed #c9b98f;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 12px;
+    font-style: italic;
+    transform: rotate(1deg);
+  }
+
+  .cups { display: flex; justify-content: center; gap: 14px; margin: 18px 0; }
+  .cup {
+    border: 0;
+    background: #fff;
+    border-radius: 16px;
+    font-size: 2.6rem;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .cup.lifted { transform: translateY(-24px) rotate(-12deg); opacity: 0.5; }
+
+  .grow { display: flex; justify-content: center; margin: 12px 0 18px; }
+  .grow-btn {
+    position: relative;
+    z-index: 1;
+    border: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .grow-btn img { display: block; width: 150px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+
+  .tv {
+    background: #2a1838;
+    border-radius: 22px;
+    padding: 14px;
+    margin: 16px auto;
+    max-width: 340px;
+  }
+  .tv-screen {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #111;
+  }
+  .tv-screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tv-static {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, #ddd 0 2px, #333 2px 4px, #999 4px 5px, #111 5px 8px);
+    animation: static 0.2s steps(4) infinite;
+  }
+  @keyframes static { to { background-position: 0 40px; } }
+  .tv-caption { color: #fff; text-align: center; margin: 10px 0 0; font-weight: 700; }
+  .tv-caption b { color: #f2a65c; }
+
+  .floor { display: flex; justify-content: flex-end; padding: 30px 18% 10px 0; }
+  .dust {
+    width: 12px;
+    height: 12px;
+    border: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: #999;
+    box-shadow: 0 0 6px 3px rgba(150, 150, 150, 0.5);
+    cursor: pointer;
+  }
+
+  .words { display: flex; flex-wrap: wrap; justify-content: center; margin: 14px 0; }
+
+  .pw { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 14px 0; }
+  .pw input {
+    font: inherit;
+    font-size: 1.1rem;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    padding: 8px 16px;
+    min-width: 0;
+    width: 200px;
+  }
+  .echo { text-align: center; font-weight: 800; margin: 0; opacity: 0; animation: echo 0.6s ease forwards; }
+  @keyframes echo { from { opacity: 0; transform: scale(1.3); } to { opacity: var(--o); } }
+
+  .bubble {
+    position: relative;
+    background: #fff;
+    border-radius: 18px;
+    padding: 12px 16px;
+    font-weight: 700;
+    text-align: center;
+    min-height: 3em;
+    margin: 10px auto 0;
+    max-width: 320px;
+  }
+  .bubble::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    margin-left: -12px;
+    border: 12px solid transparent;
+    border-bottom: 0;
+    border-top-color: #fff;
+  }
+
+  .diploma {
+    background: #fffdf3;
+    border: 6px double #c9a227;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 12px 0 18px;
+  }
+  .diploma-title {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a8841c;
+  }
+
+  /* Kjell, støvdotten som blir med deg */
+  .kjell {
+    position: fixed;
+    left: 18px;
+    bottom: 18px;
+    z-index: 21;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #c4c4c4, #7d7d7d);
+    box-shadow: 0 0 10px 6px rgba(160, 160, 160, 0.55);
+    cursor: pointer;
+    animation: wobble 2.4s ease-in-out infinite;
+  }
+  .kjell::before, .kjell::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #111;
+  }
+  .kjell::before { left: 12px; }
+  .kjell::after { right: 12px; }
+  @keyframes wobble { 50% { transform: translateY(-4px) rotate(8deg); } }
+
+  /* Emoji-regn og beskjeder */
   .drop {
     position: fixed;
     top: -3rem;
     font-size: 2rem;
     pointer-events: none;
-    z-index: 10;
+    z-index: 30;
     animation: fall linear forwards;
   }
   @keyframes fall { to { transform: translateY(115vh) rotate(360deg); } }
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 40;
+    max-width: calc(100% - 32px);
+    width: max-content;
+    padding: 10px 18px;
+    border-radius: 18px;
+    background: #2a1838;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transform: translate(-50%, 140%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
 
   @media (prefers-reduced-motion: reduce) {
-    .card { transition: none; opacity: 1; transform: none; }
-    .scroll-hint, .heart, .meter.broken, .polaroid.pop { animation: none; }
-    .meter-fill, #no, .bg { transition: none; }
+    .scroll-hint, .heart, .meter.broken, .pop, .room-card.enter, .room.dark .room-card,
+    .floaty, .kjell, .thing.shake, .thing.solo.tiny, .tv-static { animation: none; }
+    .meter-fill, .choices .no, .thing .panel, .fallen .floaty, .grow-btn { transition: none; }
+    .echo { animation: none; opacity: var(--o); }
   }
 </style>
 </head>
 <body>
-<div class="bg bg-diva active" data-name="diva" aria-hidden="true"></div>
-<div class="bg bg-mikke" data-name="mikke" aria-hidden="true"></div>
-<div class="bg bg-sladder" data-name="sladder" aria-hidden="true"></div>
-<div class="bg bg-taco" data-name="taco" aria-hidden="true"></div>
-<div class="bg bg-agurk" data-name="agurk" aria-hidden="true"></div>
+<div class="bg" aria-hidden="true"></div>
 
-<header class="hero" data-bg="diva">
+<header class="hero">
   <div class="hero-top">
-    <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <span class="heart">💖</span></h1>
-    <div class="retired">🏖️ Pensjonert. Driver nå kun med tull.</div>
+    <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <button class="heart" id="heart" aria-label="Hjerte">💖</button></h1>
+    <button class="retired" id="retired">🏖️ Pensjonert. Driver nå kun med tull.</button>
   </div>
-  <div class="scroll-hint">Scroll ned, diva. Ingenting viktig her lenger ↓</div>
+  <div class="scroll-hint">Scroll ned. Åpne ting ↓</div>
 </header>
 
 <main>
-  <section class="card" data-bg="diva">
-    <h2>Oppdrag <span class="rainbow">fullført</span> ✅</h2>
-    <p>Denne nettsiden hadde én jobb. Den gjorde den. Nå har den fått sluttpakke, gullklokke og et par solbriller.</p>
-    <div class="vs">
-      <div>Seriøs prat<b>❌</b>Avsluttet</div>
-      <div>Diva-nivå<b>📈</b>Rekordhøyt</div>
-    </div>
-    <p class="small">Herfra og ned er alt 100 % tull. Du er advart.</p>
+  <section class="card">
+    <h2>Diva-<span class="rainbow">veggen</span> 🚪</h2>
+    <p>Dører, luker, skuffer, et teppe og en safe. 24 ting som kan åpnes, og hver av dem gjør noe forskjellig. Jo høyere nummer, jo rarere blir det.</p>
+    <p class="small">Noen ting gjemmer hemmeligheter. Noen gjemmer flere ting som kan åpnes. Trykk på det som ser rart ut.</p>
+    <p class="progress"><span id="opened-count">0</span> / 24 åpnet · <span id="secret-count">0</span> / <span id="secret-total">0</span> hemmeligheter</p>
+    <div class="wall" id="wall"></div>
   </section>
 
-  <section class="card" data-bg="mikke">
-    <h2>Diva-o-<span class="rainbow">meter</span> 📏</h2>
-    <p>Vitenskapelig kalibrert. Garantert presis. Trykk og se.</p>
-    <div class="meter" id="meter"><div class="meter-fill" id="meter-fill"></div></div>
-    <p class="result" id="meter-result" aria-live="polite"></p>
-    <p class="center"><button class="btn" id="measure">Mål diva-nivå 💅</button></p>
-  </section>
-
-  <section class="card" data-bg="sladder">
-    <h2>Viktig <span class="rainbow">spørsmål</span></h2>
-    <p class="big">Er du en diva?</p>
-    <div class="choices" id="choices">
-      <button class="btn" id="yes">Ja 💅</button>
-      <button class="btn plain" id="no">Nei</button>
-    </div>
-    <p class="result" id="choice-result" aria-live="polite"></p>
-  </section>
-
-  <section class="card" data-bg="diva">
-    <h2>Dagens <span class="rainbow">diva-energi</span> 🔮</h2>
-    <p>Universet har en beskjed til deg. Trykk for å se hvilken energi du har i dag.</p>
-    <figure class="polaroid" id="energy" hidden>
-      <img id="energy-img" alt="">
-      <figcaption id="energy-text" aria-live="polite"></figcaption>
-    </figure>
-    <p class="center"><button class="btn" id="energy-btn">Vis dagens energi 🔮</button></p>
-  </section>
-
-  <section class="card" data-bg="taco">
-    <h2>Postkontoret er <span class="rainbow">stengt</span> 📮</h2>
-    <p>Postbudet har levert sin siste melding og sagt opp.</p>
-    <p class="highlight">Fra og med i dag må alle meldinger leveres personlig. Takk for forståelsen.</p>
-    <p class="small">Klager kan sendes til postbudet. Å nei, vent.</p>
-  </section>
-
-  <section class="card" data-bg="agurk">
-    <h2>Offisielle <span class="rainbow">diva-regler</span> 📜</h2>
-    <ol class="rules">
-      <li>Man går aldri inn i et rom. Man gjør <strong>entré</strong>.</li>
-      <li>«Jeg er sen» heter «jeg er etterlengtet».</li>
-      <li>Solbriller er et humør, ikke et tilbehør. 🕶️</li>
-      <li>Hydrér. Diva-glød kommer ikke av seg selv. 💧</li>
-      <li>Når folk er ass: vær den voksne i rommet. Med perfekt hår.</li>
-      <li>Uansett hvem som dukker opp i bakgrunnen, er hunden fortsatt den største divaen. Det er bare sånn det er.</li>
-    </ol>
-  </section>
-
-  <section class="card" data-bg="diva">
-    <h2>Diva-<span class="rainbow">nødknapp</span> 🚨</h2>
-    <p>Kjedelig dag? For lite glitter i livet? Trykk.</p>
-    <p class="center"><button class="btn" id="panic">Send diva-forsterkninger</button></p>
-    <p class="result" id="panic-result" aria-live="polite"></p>
-    <p class="small center">Date-tilbudet har forresten ingen utløpsdato. 🥂</p>
-  </section>
+  <div class="under">
+    <button class="ghost" id="trapdoor">Det er ingenting her nede.</button>
+    <div id="hatch-wrap" hidden></div>
+    <p class="reset"><button class="ghost" id="reset">Lukk alt igjen</button></p>
+  </div>
 </main>
 
+<div class="room" id="room" role="dialog" aria-modal="true" aria-labelledby="room-title" hidden>
+  <div class="room-bg" id="room-bg"></div>
+  <button class="room-close" id="room-close">✕ Tilbake til veggen</button>
+  <section class="card room-card" id="room-card"></section>
+  <button class="kjell" id="kjell" aria-label="Kjell" hidden></button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-  // Kortene glir inn når du scroller
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.25 });
-  document.querySelectorAll('.card').forEach((c) => io.observe(c));
-
-  // Bakgrunnen bytter til kortets egen diva når kortet når midten av skjermen
-  const layers = document.querySelectorAll('.bg');
-  const bgObserver = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      layers.forEach((l) => l.classList.toggle('active', l.dataset.name === e.target.dataset.bg));
-    });
-  }, { rootMargin: '-45% 0px -45% 0px' });
-  document.querySelectorAll('[data-bg]').forEach((el) => bgObserver.observe(el));
-
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pick = (list) => list[Math.floor(Math.random() * list.length)];
+  const img = (name, pos = 'center 30%') => `url("${name}.jpg") ${pos} / cover no-repeat, #3a2350`;
 
-  // Emoji-regn
-  function rain(count = 40) {
+  // ---------- Fremgang (lagres i nettleseren, men siden virker uten) ----------
+  const SECRETS = {
+    hjerte: 'Knust hjerte 💔',
+    pensjonist: 'Sur pensjonist 😤',
+    kjell: 'Kjell',
+    nokkel: 'Nøkkelen 🔑',
+    'lille-dor': 'Den lille døra 🚪',
+    kjelleren: 'Kjelleren 🕳️',
+    agurk: 'Agurk-dimensjonen 🥒',
+    hund: 'Hundens hemmelighet 🐶',
+    slutten: 'Slutten av internett 🌐',
+  };
+  const TOTAL_SECRETS = Object.keys(SECRETS).length;
+  const state = { opened: [], secrets: [] };
+  try {
+    const saved = JSON.parse(localStorage.getItem('diva-veggen'));
+    if (saved && Array.isArray(saved.opened) && Array.isArray(saved.secrets)) Object.assign(state, saved);
+  } catch (e) {}
+  function save() {
+    try { localStorage.setItem('diva-veggen', JSON.stringify(state)); } catch (e) {}
+  }
+  const has = (s) => state.secrets.includes(s);
+  function discover(s) {
+    if (has(s)) return;
+    state.secrets.push(s);
+    save();
+    updateProgress();
+    toast(`🔓 Hemmelighet funnet: ${SECRETS[s]} (${state.secrets.length}/${TOTAL_SECRETS})`);
+  }
+
+  // ---------- Små beskjeder nederst ----------
+  const toastEl = document.getElementById('toast');
+  const toastQueue = [];
+  let toastBusy = false;
+  function toast(msg) {
+    toastQueue.push(msg);
+    if (!toastBusy) nextToast();
+  }
+  function nextToast() {
+    const msg = toastQueue.shift();
+    if (!msg) { toastBusy = false; return; }
+    toastBusy = true;
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    setTimeout(() => {
+      toastEl.classList.remove('show');
+      setTimeout(nextToast, 350);
+    }, 2800);
+  }
+
+  // ---------- Emoji-regn ----------
+  const DIVA = ['💅', '✨', '💖', '👑', '💜', '🌈', '🐶', '💋', '🕶️'];
+  function rain(count = 40, emojis = DIVA) {
     if (reduceMotion) return;
-    const emojis = ['💅', '✨', '💖', '👑', '💜', '🌈', '🐶', '💋', '🕶️'];
     for (let i = 0; i < count; i++) {
       const d = document.createElement('span');
       d.className = 'drop';
@@ -360,8 +814,31 @@
     }
   }
 
-  // Diva-o-meter: svaret er alltid over 100 %
-  const readings = [
+  // ---------- Ting som kan åpnes ----------
+  // Hver type åpner seg på sin egen måte (se CSS-en for .t-*)
+  const KINDS = {
+    door: { name: 'Dør', panels: 1, size: 'h2' },
+    double: { name: 'Skapdører', panels: 2, size: 'w2' },
+    drawer: { name: 'Skuff', panels: 1, size: 'w2' },
+    curtain: { name: 'Teppe', panels: 2, size: 'w2 h2' },
+    safe: { name: 'Safe', panels: 1, size: 'h2' },
+    roller: { name: 'Rulleport', panels: 1, size: '' },
+    hatch: { name: 'Luke', panels: 1, size: '' },
+    slide: { name: 'Skyveluke', panels: 1, size: '' },
+    flap: { name: 'Klaff', panels: 1, size: '' },
+    porthole: { name: 'Koøye', panels: 1, size: '' },
+  };
+  const COLORS = ['#e04848', '#e8863a', '#c9a227', '#4caf50', '#3d97d6', '#7e57c2', '#c2410c', '#be3fd6'];
+  function thingInner(kind, inside, plate) {
+    const panels = KINDS[kind].panels === 2 ? '<span class="panel l"></span><span class="panel r"></span>' : '<span class="panel"></span>';
+    return `<span class="inside" aria-hidden="true">${inside}</span>${panels}${plate ? `<span class="plate" aria-hidden="true">${plate}</span>` : ''}`;
+  }
+  // En ting inne i et rom. Med data-go="rom" åpner den seg og tar deg videre dit.
+  const thing = (kind, inside, opts) =>
+    `<button class="thing solo t-${kind}${opts.cls ? ' ' + opts.cls : ''}" aria-label="${opts.label}" ${opts.attrs || ''}>${thingInner(kind, inside, opts.plate)}</button>`;
+
+  // ---------- Innhold ----------
+  const READINGS = [
     [112, 'Litt over skalaen. Helt normalt for deg.'],
     [147, 'Måleren svetter. 💦'],
     [200, 'Dobbel diva. Statistisk umulig, men her er vi.'],
@@ -369,119 +846,956 @@
     [777, 'Jackpot. 🎰 Du vant mer diva.'],
     [999, 'Måleren gikk i stykker. Regningen sendes til deg. 💅'],
   ];
-  const meter = document.getElementById('meter');
-  const fill = document.getElementById('meter-fill');
-  const meterResult = document.getElementById('meter-result');
-  let lastReading = null;
-  document.getElementById('measure').addEventListener('click', () => {
-    let r;
-    do { r = pick(readings); } while (r === lastReading);
-    lastReading = r;
-    meter.classList.remove('broken');
-    fill.style.transition = 'none';
-    fill.style.width = '0';
-    meterResult.textContent = 'Måler …';
-    void fill.offsetWidth;
-    fill.style.transition = '';
-    fill.style.width = '100%';
-    setTimeout(() => {
-      meter.classList.add('broken');
-      meterResult.innerHTML = `<strong class="rainbow">${r[0]} %</strong>${r[1]}`;
-      if (r[0] >= 404) rain(25);
-    }, reduceMotion ? 0 : 1400);
-  });
-
-  // Nei-knappen nekter å bli trykket på
-  const choices = document.getElementById('choices');
-  const yes = document.getElementById('yes');
-  const no = document.getElementById('no');
-  const choiceResult = document.getElementById('choice-result');
-  const taunts = [
-    'Hmm, den knappen virker ikke.',
-    'Nei-knappen er ute av drift. 🚫',
-    'Prøv gjerne igjen. Det hjelper ikke.',
-    'Feil svar finnes ikke her. Bare ja.',
-  ];
-  let attempts = 0;
-  let convertedAt = 0;
-  function dodge() {
-    attempts++;
-    if (attempts >= 6) {
-      no.textContent = 'Ja (også) 💅';
-      choiceResult.textContent = 'Nei-knappen ga opp og byttet side.';
-      convertedAt = Date.now();
-      return;
-    }
-    const box = choices.getBoundingClientRect();
-    const yesBox = yes.getBoundingClientRect();
-    const maxX = box.width - no.offsetWidth;
-    const maxY = box.height - no.offsetHeight;
-    let x, y, tries = 0;
-    do {
-      x = Math.random() * maxX;
-      y = Math.random() * maxY;
-      tries++;
-    } while (tries < 20 &&
-      x < yesBox.right - box.left + 10 && x + no.offsetWidth > yesBox.left - box.left - 10 &&
-      y < yesBox.bottom - box.top + 10 && y + no.offsetHeight > yesBox.top - box.top - 10);
-    no.style.left = x + 'px';
-    no.style.top = y + 'px';
-    choiceResult.textContent = pick(taunts);
-  }
-  // Med mus stikker den av før du rekker å trykke; på mobil hopper den unna når du trykker
-  no.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && attempts < 6) dodge(); });
-  no.addEventListener('click', () => {
-    if (attempts < 6) dodge();
-    // Ignorer klikket fra samme trykk som fikk knappen til å bytte side
-    else if (Date.now() - convertedAt > 500) { choiceResult.textContent = 'Selvfølgelig. Det visste vi. 💅'; rain(); }
-  });
-  yes.addEventListener('click', () => {
-    choiceResult.textContent = 'Selvfølgelig. Det visste vi. 💅';
-    rain();
-  });
-
-  // Dagens diva-energi
-  const energies = [
+  const ENERGIES = [
     ['diva.jpg', 'Smilende hund med teksten Yaaaasss diva', 'Yaaaasss diva. Som vanlig. Ingen overraskelser her. 💅'],
     ['mikke.jpg', 'Smilende ansikt i Mikke Mus-kostyme', 'Magisk, men litt forvirrende. Ingen vet helt hva som skjer, men alle smiler. ✨'],
     ['sladder.jpg', 'Forvrengt selfie med et lurt smil', 'Vet noe du ikke vet, og har ikke tenkt å si det. 👀'],
     ['taco.jpg', 'Smilende person som sikler', 'Har akkurat fått vite at det er taco til middag. 🌮'],
     ['agurk.jpg', 'Person med munnen full av agurker', 'Spa-dag. Agurkene havnet litt feil, men selvtilliten sitter. 🥒'],
   ];
-  const energy = document.getElementById('energy');
-  const energyImg = document.getElementById('energy-img');
-  const energyText = document.getElementById('energy-text');
-  const energyBtn = document.getElementById('energy-btn');
-  let lastEnergy = null;
-  energyBtn.addEventListener('click', () => {
-    let en;
-    do { en = pick(energies); } while (en === lastEnergy);
-    lastEnergy = en;
-    energyImg.src = en[0];
-    energyImg.alt = en[1];
-    energyText.textContent = en[2];
-    energy.hidden = false;
-    energy.style.setProperty('--tilt', (Math.random() * 8 - 4).toFixed(1) + 'deg');
-    energy.classList.remove('pop');
-    void energy.offsetWidth;
-    energy.classList.add('pop');
-    energyBtn.textContent = 'Spør universet igjen 🔮';
+  const COMPLIMENTS = [
+    'Du er så diva at speilet ditt tar selfies av deg.',
+    'Når du går inn i et rom, reiser møblene seg.',
+    'Wi-fi-en blir sterkere når du er i nærheten.',
+    'Du kunne ha solgt solbriller til månen.',
+    'Du er grunnen til at glitter finnes.',
+    'Regnbuer ser på deg og tenker: «Ok, litt mye.»',
+    'Selv hunden synes du er mye. Og hunden er MYE.',
+    'Denne veggen fikk 24 luker bare fordi én ikke var nok for deg.',
+  ];
+  const CHANNELS = [
+    ['diva.jpg', 'NRK Diva', 'Dagsrevyen. Hovedsak: Hunden er fortsatt diva.'],
+    ['mikke.jpg', 'Disney Diva', 'Klubbhuset. Ingen vet hvem som er med.'],
+    ['sladder.jpg', 'TV Sladder', 'Han vet noe. Direkte, hele døgnet.'],
+    ['taco.jpg', 'Matkanalen', 'Taco-fredag. Sendes alle dager.'],
+    ['agurk.jpg', 'Spa-TV', 'Agurkbehandling, del 47.'],
+    [null, 'Kanal 404', 'Ingen signal. Bare snø.'],
+  ];
+  const DOG_LINES = [
+    'Hei.',
+    'Ja, jeg kan snakke. Ikke vær så overrasket.',
+    'Jeg har sett deg åpne alle disse lukene og skuffene.',
+    'Det er jeg som har bygget dem.',
+    'Jeg er ikke en hund. Jeg er en diva i hundeform.',
+    'Ikke si det til noen.',
+    'Spesielt ikke til han bak nr. 18. Han vet det sikkert allerede.',
+    '…',
+    'Voff.',
+  ];
+
+  // Hvert rom: hva slags ting som åpnes (kind), tittel, bakgrunn, innhold og eventuelt
+  // litt oppførsel (init). init får rommet og en funksjon alive() som sier om rommet fortsatt er åpent.
+  const rooms = {
+    1: {
+      kind: 'door', icon: '👋', title: 'Velkommen!', bg: img('diva'),
+      html: `
+        <p>Gratulerer! Du åpnet en dør.</p>
+        <p>Det var egentlig det. Ikke alle dører kan være spennende.</p>
+        <p class="highlight">Tips: Trykk på ting som ser rare ut. Noen ting gjemmer hemmeligheter, og noen gjemmer flere ting som kan åpnes.</p>
+        <p class="small">Det blir rarere jo høyere nummer du åpner.</p>`,
+    },
+    2: {
+      kind: 'slide', icon: '📏', title: 'Diva-o-meter', bg: img('mikke'),
+      html: `
+        <p>Vitenskapelig kalibrert. Garantert presis. Trykk og se.</p>
+        <div class="meter"><div class="meter-fill"></div></div>
+        <p class="result" aria-live="polite"></p>
+        <p class="center"><button class="btn" data-act="measure">Mål diva-nivå 💅</button></p>`,
+      init(el, alive) {
+        const meter = el.querySelector('.meter');
+        const fill = el.querySelector('.meter-fill');
+        const out = el.querySelector('.result');
+        let last = null;
+        el.querySelector('[data-act=measure]').addEventListener('click', () => {
+          let r;
+          do { r = pick(READINGS); } while (r === last);
+          last = r;
+          meter.classList.remove('broken');
+          fill.style.transition = 'none';
+          fill.style.width = '0';
+          out.textContent = 'Måler …';
+          void fill.offsetWidth;
+          fill.style.transition = '';
+          fill.style.width = '100%';
+          setTimeout(() => {
+            if (!alive()) return;
+            meter.classList.add('broken');
+            out.innerHTML = `<strong class="rainbow">${r[0]} %</strong>${r[1]}`;
+            if (r[0] >= 404) rain(25);
+          }, reduceMotion ? 0 : 1400);
+        });
+      },
+    },
+    3: {
+      kind: 'hatch', icon: '❓', title: 'Viktig spørsmål', bg: img('sladder'),
+      html: `
+        <p class="big">Er du en diva?</p>
+        <div class="choices">
+          <button class="btn yes">Ja 💅</button>
+          <button class="btn plain no">Nei</button>
+        </div>
+        <p class="result" aria-live="polite"></p>`,
+      init(el) {
+        // Nei-knappen nekter å bli trykket på
+        const choices = el.querySelector('.choices');
+        const yes = el.querySelector('.yes');
+        const no = el.querySelector('.no');
+        const out = el.querySelector('.result');
+        const taunts = [
+          'Hmm, den knappen virker ikke.',
+          'Nei-knappen er ute av drift. 🚫',
+          'Prøv gjerne igjen. Det hjelper ikke.',
+          'Feil svar finnes ikke her. Bare ja.',
+        ];
+        let attempts = 0;
+        let convertedAt = 0;
+        const celebrate = () => { out.textContent = 'Selvfølgelig. Det visste vi. 💅'; rain(); };
+        function dodge() {
+          attempts++;
+          if (attempts >= 6) {
+            no.textContent = 'Ja (også) 💅';
+            out.textContent = 'Nei-knappen ga opp og byttet side.';
+            convertedAt = Date.now();
+            return;
+          }
+          const box = choices.getBoundingClientRect();
+          const yesBox = yes.getBoundingClientRect();
+          const maxX = box.width - no.offsetWidth;
+          const maxY = box.height - no.offsetHeight;
+          let x, y, tries = 0;
+          do {
+            x = Math.random() * maxX;
+            y = Math.random() * maxY;
+            tries++;
+          } while (tries < 20 &&
+            x < yesBox.right - box.left + 10 && x + no.offsetWidth > yesBox.left - box.left - 10 &&
+            y < yesBox.bottom - box.top + 10 && y + no.offsetHeight > yesBox.top - box.top - 10);
+          no.style.left = x + 'px';
+          no.style.top = y + 'px';
+          out.textContent = pick(taunts);
+        }
+        // Med mus stikker den av før du rekker å trykke; på mobil hopper den unna når du trykker
+        no.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && attempts < 6) dodge(); });
+        no.addEventListener('click', () => {
+          if (attempts < 6) dodge();
+          // Ignorer klikket fra samme trykk som fikk knappen til å bytte side
+          else if (Date.now() - convertedAt > 500) celebrate();
+        });
+        yes.addEventListener('click', celebrate);
+      },
+    },
+    4: {
+      kind: 'porthole', icon: '🔮', title: 'Dagens diva-energi', bg: 'linear-gradient(160deg, #3a2350, #8a3fa8)',
+      html: `
+        <p>Universet har en beskjed til deg. Trykk for å se hvilken energi du har i dag.</p>
+        <figure class="polaroid" hidden>
+          <img alt="">
+          <figcaption aria-live="polite"></figcaption>
+        </figure>
+        <p class="center"><button class="btn" data-act="energy">Vis dagens energi 🔮</button></p>`,
+      init(el) {
+        const fig = el.querySelector('.polaroid');
+        const pic = fig.querySelector('img');
+        const caption = fig.querySelector('figcaption');
+        const btn = el.querySelector('[data-act=energy]');
+        let last = null;
+        btn.addEventListener('click', () => {
+          let en;
+          do { en = pick(ENERGIES); } while (en === last);
+          last = en;
+          pic.src = en[0];
+          pic.alt = en[1];
+          caption.textContent = en[2];
+          fig.hidden = false;
+          fig.style.setProperty('--tilt', (Math.random() * 8 - 4).toFixed(1) + 'deg');
+          fig.classList.remove('pop');
+          void fig.offsetWidth;
+          fig.classList.add('pop');
+          btn.textContent = 'Spør universet igjen 🔮';
+        });
+      },
+    },
+    5: {
+      kind: 'flap', icon: '📮', title: 'Postkontoret er stengt', bg: 'linear-gradient(160deg, #c0392b, #6e1f2f)',
+      html: `
+        <p>Postbudet har levert sin siste melding og sagt opp.</p>
+        <p class="highlight">Fra og med i dag må alle meldinger leveres personlig. Takk for forståelsen.</p>
+        <p class="center"><button class="emoji-btn" data-act="postbox" aria-label="Postkassa">📮</button></p>
+        <p class="result" aria-live="polite"></p>
+        <div class="letter" hidden>Kjære diva.<br>Du er fantastisk.<br>Det var alt.<br><br>Hilsen postbudet (pensjonert) 📮</div>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        const letter = el.querySelector('.letter');
+        const lines = ['Postkassa er tom.', 'Helt tom.', 'Å. Det lå visst et brev igjen likevel.'];
+        let taps = 0;
+        el.querySelector('[data-act=postbox]').addEventListener('click', () => {
+          out.textContent = lines[Math.min(taps, lines.length - 1)];
+          taps++;
+          if (taps >= lines.length) { letter.hidden = false; letter.classList.add('pop'); }
+        });
+      },
+    },
+    6: {
+      kind: 'roller', icon: '📜', title: 'Offisielle diva-regler', bg: img('diva'),
+      html: `
+        <ol class="rules">
+          <li>Man går aldri inn i et rom. Man gjør <strong>entré</strong>.</li>
+          <li>«Jeg er sen» heter «jeg er etterlengtet».</li>
+          <li>Solbriller er et humør, ikke et tilbehør. 🕶️</li>
+          <li>Hydrér. Diva-glød kommer ikke av seg selv. 💧</li>
+          <li>Når folk er ass: vær den voksne i rommet. Med perfekt hår.</li>
+          <li>Uansett hva som skjer bak de andre lukene, er hunden fortsatt den største divaen.</li>
+          <li>Ikke åpne nr. 14. Den skammer seg.</li>
+        </ol>`,
+    },
+    7: {
+      kind: 'hatch', icon: '🚨', title: 'Diva-nødluke', bg: 'linear-gradient(160deg, #f25c5c, #8a3fa8)',
+      html: `
+        <p>Kjedelig dag? For lite glitter i livet? Trykk.</p>
+        <p class="center"><button class="btn" data-act="panic">Send diva-forsterkninger</button></p>
+        <p class="result" aria-live="polite"></p>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        const lines = [
+          'Forsterkninger er på vei. 🚁',
+          'Glitter-lageret er fortsatt fullt.',
+          'Diva-ressursene er uendelige. Fortsett.',
+          'Naboene lurer på hva som skjer.',
+          'Hunden godkjenner. 🐶',
+        ];
+        let panics = 0;
+        el.querySelector('[data-act=panic]').addEventListener('click', () => {
+          panics++;
+          rain(50);
+          out.textContent = `${pick(lines)} (${panics} ${panics === 1 ? 'utrykning' : 'utrykninger'})`;
+        });
+      },
+    },
+    8: {
+      kind: 'double', icon: '💐', title: 'Kompliment-maskinen', bg: 'linear-gradient(160deg, #f2a65c, #d65cf2)',
+      html: `
+        <p>Denne maskinen har bare ett program: å si sannheten.</p>
+        <p class="result" aria-live="polite"></p>
+        <p class="center"><button class="btn" data-act="compliment">Gi meg et kompliment 💐</button></p>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        let i = Math.floor(Math.random() * COMPLIMENTS.length);
+        el.querySelector('[data-act=compliment]').addEventListener('click', () => {
+          i = (i + 1) % COMPLIMENTS.length;
+          out.textContent = COMPLIMENTS[i];
+        });
+      },
+    },
+    9: {
+      kind: 'drawer', icon: '🥤', title: 'Hvor er hunden?', bg: 'linear-gradient(160deg, #2e7d5b, #14402d)',
+      html: `
+        <p>Skuffen var full av kopper. Hunden har gjemt seg under en av dem. Finn den.</p>
+        <div class="cups">
+          <button class="cup" aria-label="Kopp 1">🥤</button>
+          <button class="cup" aria-label="Kopp 2">🥤</button>
+          <button class="cup" aria-label="Kopp 3">🥤</button>
+        </div>
+        <p class="result" aria-live="polite"></p>
+        <figure class="polaroid" hidden><img src="diva.jpg" alt="Hunden, rett bak deg"><figcaption>👀</figcaption></figure>`,
+      init(el, alive) {
+        const out = el.querySelector('.result');
+        const fig = el.querySelector('.polaroid');
+        const lines = ['Tomt.', 'Også tomt. Mistenkelig.', 'Hunden var aldri under en kopp …'];
+        let tries = 0;
+        el.querySelectorAll('.cup').forEach((cup) => cup.addEventListener('click', () => {
+          if (cup.classList.contains('lifted')) return;
+          cup.classList.add('lifted');
+          out.textContent = lines[tries++];
+          if (tries === 3) {
+            setTimeout(() => {
+              if (!alive()) return;
+              out.textContent = '… hunden er rett bak deg.';
+              fig.hidden = false;
+              fig.classList.add('pop');
+            }, 1500);
+          }
+        }));
+      },
+    },
+    10: {
+      kind: 'hatch', icon: '🐶', title: 'Ikke trykk på hunden', bg: 'linear-gradient(160deg, #5cb8f2, #3a2350)',
+      html: `
+        <p class="result" aria-live="polite">Dette er hundeluka. Uansett hva du gjør: ikke trykk på hunden.</p>
+        <div class="grow"><button class="grow-btn" aria-label="Hunden"><img src="diva.jpg" alt="Hunden"></button></div>
+        <p class="center"><button class="btn plain" data-act="shrink" hidden>Krymp hunden 🔬</button></p>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        const dog = el.querySelector('.grow-btn');
+        const shrink = el.querySelector('[data-act=shrink]');
+        const lines = { 1: 'Jeg sa ikke trykk.', 2: 'Hei. Slutt.', 3: 'Den vokser.', 5: 'Den VOKSER.', 7: 'Hva har du gjort?', 8: 'Du har skapt et monster. 🐶' };
+        let taps = 0;
+        dog.addEventListener('click', () => {
+          if (taps >= 8) return;
+          taps++;
+          dog.style.transform = `scale(${1 + taps * 0.22})`;
+          if (lines[taps]) out.textContent = lines[taps];
+          if (taps === 8) { rain(30, ['🐶']); shrink.hidden = false; }
+        });
+        shrink.addEventListener('click', () => {
+          taps = 0;
+          dog.style.transform = '';
+          shrink.hidden = true;
+          out.textContent = 'Puh. Alt er normalt igjen. Nesten.';
+        });
+      },
+    },
+    11: {
+      kind: 'double', icon: '📺', title: 'Diva-TV', bg: 'linear-gradient(160deg, #1d1d2b, #4b3b6b)',
+      html: `
+        <p>Seks kanaler. Null kvalitet. Trykk for å zappe.</p>
+        <div class="tv">
+          <div class="tv-screen"><img alt=""><div class="tv-static" hidden></div></div>
+          <p class="tv-caption" aria-live="polite"></p>
+        </div>
+        <p class="center"><button class="btn" data-act="zap">Bytt kanal 📺</button></p>`,
+      init(el) {
+        const pic = el.querySelector('.tv-screen img');
+        const noise = el.querySelector('.tv-static');
+        const caption = el.querySelector('.tv-caption');
+        let ch = -1;
+        function zap() {
+          ch = (ch + 1) % CHANNELS.length;
+          const [src, name, show] = CHANNELS[ch];
+          noise.hidden = !!src;
+          pic.hidden = !src;
+          if (src) { pic.src = src; pic.alt = `${name}: ${show}`; }
+          caption.innerHTML = `<b>${ch + 1}. ${name}</b><br>${show}`;
+        }
+        el.querySelector('[data-act=zap]').addEventListener('click', zap);
+        zap();
+      },
+    },
+    12: {
+      kind: 'drawer', size: '', icon: '💨', title: 'Ingenting', bg: 'linear-gradient(160deg, #cfc6d6, #8d8399)',
+      html: `
+        <p>Denne skuffen er tom.</p>
+        <p>Helt tom.</p>
+        <p class="small">Ingenting å se her. Gå videre.</p>
+        <div class="floor"><button class="dust" aria-label="Noe lite i hjørnet av skuffen"></button></div>
+        <p class="result" aria-live="polite"></p>`,
+      init(el) {
+        const dust = el.querySelector('.dust');
+        const out = el.querySelector('.result');
+        if (has('kjell')) {
+          dust.remove();
+          out.textContent = 'Det var her du fant Kjell. Han savner ikke stedet.';
+          return;
+        }
+        dust.addEventListener('click', () => {
+          dust.remove();
+          out.innerHTML = 'Å! Det var en støvdott. Han heter <strong>Kjell</strong>.<br>Kjell blir med deg videre nå.';
+          discover('kjell');
+          kjellEl.hidden = false;
+        });
+      },
+    },
+    13: {
+      kind: 'roller', icon: '🌮', title: 'Taco-luka', bg: img('taco', 'center'),
+      html: `
+        <p>Bak denne rulleporten er det taco-fredag. Hver dag. For alltid.</p>
+        <p class="center"><button class="btn" data-act="taco">Spis taco 🌮</button></p>
+        <p class="result" aria-live="polite"></p>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        const notes = { 1: 'Nam.', 3: 'Sikling oppdaget. 💦', 5: 'Du er nå 40 % taco.', 10: 'Du er nå 80 % taco.', 15: 'Du ER taco. 🌮', 25: 'Taco-lageret er tomt. Nei, vent, det fylte seg opp igjen.' };
+        let eaten = 0;
+        let note = '';
+        el.querySelector('[data-act=taco]').addEventListener('click', () => {
+          eaten++;
+          note = notes[eaten] || note;
+          rain(12, ['🌮']);
+          out.textContent = `${eaten} ${eaten === 1 ? 'taco' : 'tacoer'} spist. ${note}`;
+        });
+      },
+    },
+    14: {
+      kind: 'door', icon: '🫣', title: 'Oi', bg: 'linear-gradient(160deg, #6b5b4b, #2e2620)',
+      html: `<div class="lines" aria-live="polite"></div>`,
+      init(el, alive) {
+        const box = el.querySelector('.lines');
+        const lines = [
+          'Beklager, du har åpnet feil dør.',
+          'Riktig dør er nr. 14.',
+          '…',
+          'Vent litt.',
+          'Dette ER nr. 14.',
+          'Denne døra lukker seg nå av ren skam. 🚪',
+        ];
+        lines.forEach((line, i) => setTimeout(() => {
+          if (!alive()) return;
+          const p = document.createElement('p');
+          p.textContent = line;
+          p.className = 'pop';
+          box.appendChild(p);
+        }, i * 1300));
+        setTimeout(() => {
+          if (!alive()) return;
+          closeRooms();
+          toast('Nr. 14 lukket seg selv. Den trenger litt tid alene.');
+        }, lines.length * 1300 + 1800);
+      },
+    },
+    15: {
+      kind: 'slide', icon: '🥒', title: 'Agurk-spaet', bg: img('agurk', 'center 40%'),
+      html: `
+        <p>Velkommen til agurk-spaet. 🥒</p>
+        <p class="highlight">Vennligst legg agurkene på øynene. Ikke i munnen. Vi ser på deg.</p>
+        <div class="words">
+          <button class="btn plain" data-spa="0">Ansiktsbehandling</button>
+          <button class="btn plain" data-spa="1">Massasje</button>
+          <button class="btn" data-spa="2">Alt sammen</button>
+        </div>
+        <p class="result" aria-live="polite"></p>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        const answers = [
+          'Utsolgt. Agurkene ble spist.',
+          'Massøren er en agurk. Den gjør så godt den kan.',
+          'Du er nå 100 % hydrert. Kanskje litt for mye.',
+        ];
+        el.querySelectorAll('[data-spa]').forEach((b) => b.addEventListener('click', () => {
+          out.textContent = answers[b.dataset.spa];
+          if (b.dataset.spa === '2') rain(30, ['🥒', '💧']);
+        }));
+      },
+    },
+    16: {
+      kind: 'flap', icon: '🔑', title: 'Passord, takk', bg: 'linear-gradient(160deg, #2a1838, #1a3a5a)',
+      html: `
+        <p>En stemme bak klaffen spør etter passordet.</p>
+        <form class="pw">
+          <input type="text" maxlength="30" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Passord" aria-label="Passord">
+          <button class="btn">Lås opp</button>
+        </form>
+        <p class="result" aria-live="polite"></p>`,
+      init(el) {
+        const form = el.querySelector('.pw');
+        const input = form.querySelector('input');
+        const out = el.querySelector('.result');
+        const hints = [
+          'Feil. Hint: Hva er du?',
+          'Feil. Hint: Det rimer på «liva».',
+          'Feil. Hint: Det står bokstavelig talt overalt på denne siden.',
+          'Passordet er «diva». Det har alltid vært «diva».',
+        ];
+        let wrong = 0;
+        if (has('nokkel')) {
+          form.hidden = true;
+          out.textContent = 'Du har allerede nøkkelen. 🔑 Den ligger i lomma og er god og varm.';
+          return;
+        }
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const guess = input.value.trim().toLowerCase().replace(/^en\s+/, '').replace(/[!.]+$/, '');
+          if (guess === 'diva') {
+            form.hidden = true;
+            out.textContent = 'Riktig! 🔑 En nøkkel faller ut av klaffen. Den ser ut som den passer til en safe …';
+            discover('nokkel');
+            rain(20, ['🔑', '✨']);
+          } else {
+            out.textContent = hints[Math.min(wrong++, hints.length - 1)];
+            input.select();
+          }
+        });
+      },
+    },
+    17: {
+      kind: 'door', icon: '🐭', title: 'Diva-klubbhuset', bg: img('mikke'),
+      html: `
+        <p>Velkommen til Diva-klubbhuset! Si de magiske ordene for å komme inn.</p>
+        <div class="words">
+          <button class="btn" data-w="Diva!">Diva!</button>
+          <button class="btn plain" data-w="Miska">Miska</button>
+          <button class="btn plain" data-w="Muska">Muska</button>
+        </div>
+        <p class="result" aria-live="polite"></p>
+        ${thing('door', '', { cls: 'tiny', label: 'Bitteliten dør', attrs: 'data-go="bak" hidden' })}`,
+      init(el) {
+        const out = el.querySelector('.result');
+        const tiny = el.querySelector('.tiny');
+        const magic = ['Miska', 'Muska', 'Diva!'];
+        let said = [];
+        if (has('lille-dor')) {
+          tiny.hidden = false;
+          out.textContent = 'Den lille døra står der fortsatt.';
+        }
+        el.querySelectorAll('[data-w]').forEach((b) => b.addEventListener('click', () => {
+          said.push(b.dataset.w);
+          if (said[said.length - 1] !== magic[said.length - 1]) {
+            said = [];
+            out.textContent = 'Nei, nei. Fra begynnelsen. 🎵';
+          } else if (said.length < magic.length) {
+            out.textContent = said.join(' … ') + ' …';
+          } else {
+            said = [];
+            out.textContent = 'Klubbhuset rister … og en bitteliten dør dukker opp nede i hjørnet.';
+            tiny.hidden = false;
+          }
+        }));
+      },
+    },
+    18: {
+      kind: 'slide', icon: '👀', title: 'Han vet noe', bg: img('sladder'),
+      html: `
+        <p>Skyveluka glir opp. Et par øyne ser ut. Han vet noe.</p>
+        <p class="result" aria-live="polite"></p>
+        <p class="center"><button class="btn" data-act="gossip">Hva vet han? 👀</button></p>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        const facts = () => [
+          `Han vet at du har åpnet ${state.opened.length} av 24 ting.`,
+          'Han vet at nei-knappen bak nr. 3 aldri har virket.',
+          has('kjell') ? 'Han vet at Kjell følger etter deg.' : 'Han vet om en støvdott du ikke har møtt ennå.',
+          has('nokkel') ? 'Han vet at du har en nøkkel i lomma.' : 'Han vet passordet bak nr. 16. Han sier det ikke.',
+          has('kjelleren') ? 'Han vet at du har vært i kjelleren. Han sier ingenting.' : 'Han vet hva som er under gulvet.',
+          'Han vet at du fortsatt trykker.',
+        ];
+        let i = 0;
+        el.querySelector('[data-act=gossip]').addEventListener('click', () => {
+          const list = facts();
+          out.textContent = list[i++ % list.length];
+        });
+      },
+    },
+    19: {
+      kind: 'porthole', icon: '🪐', title: 'Null tyngdekraft', bg: 'linear-gradient(160deg, #0b0b2b, #3a2350)', mood: 'float',
+      html: `
+        <div class="floaties">
+          <p class="floaty" style="--d: 0s; --r: 3deg">Du kikket ut av koøyet og havnet i verdensrommet.</p>
+          <p class="floaty" style="--d: 0.4s; --r: -4deg">Tyngdekraften her er pensjonert. Akkurat som resten av nettsiden.</p>
+          <p class="floaty big" style="--d: 0.8s; --r: 6deg">🪐 🐶 💅</p>
+          <p class="floaty small" style="--d: 1.2s; --r: -2deg">Alt bare … svever.</p>
+        </div>
+        <p class="result" aria-live="polite"></p>
+        <p class="center"><button class="btn" data-act="gravity">Skru på tyngdekraften</button></p>`,
+      init(el) {
+        const group = el.querySelector('.floaties');
+        const out = el.querySelector('.result');
+        const btn = el.querySelector('[data-act=gravity]');
+        btn.addEventListener('click', () => {
+          const fallen = group.classList.toggle('fallen');
+          out.textContent = fallen ? 'Oi. Alt falt ned. Det var visst viktig.' : 'Puh. Alt svever igjen.';
+          btn.textContent = fallen ? 'Skru av tyngdekraften' : 'Skru på tyngdekraften';
+        });
+      },
+    },
+    20: {
+      kind: 'double', icon: '🪞', title: 'Speilskapet', bg: img('diva'), mood: 'mirror',
+      html: `
+        <p>Du åpnet speilskapet og falt inn i det.</p>
+        <p>Alt her inne er speilvendt. Dette er ikke en feil.</p>
+        <p class="result" aria-live="polite"></p>
+        <p class="center"><button class="btn" data-act="flip">Snu rommet 🔄</button></p>`,
+      init(el) {
+        const out = el.querySelector('.result');
+        el.querySelector('[data-act=flip]').addEventListener('click', () => {
+          const mirrored = roomEl.classList.toggle('mirror');
+          out.textContent = mirrored ? 'Tilbake til speilvendt. Du valgte dette selv.' : 'Takk. Det var slitsomt for øynene.';
+        });
+      },
+    },
+    21: {
+      kind: 'hatch', icon: '📢', title: 'Ventilasjonsluka', bg: 'linear-gradient(160deg, #546e7a, #1c2a30)',
+      html: `
+        <p>Bak luka går det en lang, mørk ventilasjonskanal. Rop noe inn i den.</p>
+        <form class="pw">
+          <input type="text" maxlength="30" autocomplete="off" placeholder="Hallo?" aria-label="Hva vil du rope?">
+          <button class="btn">Rop 📢</button>
+        </form>
+        <div class="echoes" aria-live="polite"></div>`,
+      init(el) {
+        const form = el.querySelector('.pw');
+        const input = form.querySelector('input');
+        const box = el.querySelector('.echoes');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const word = input.value.trim() || 'hallo';
+          const lower = word.toLowerCase();
+          const echoes = [word.toUpperCase(), word, lower + ' …', '… ' + lower + ' …', pick(['… agurk?', '… diva.', '… Kjell?', '… hvem der?', '… taco.'])];
+          box.textContent = '';
+          echoes.forEach((text, i) => {
+            const p = document.createElement('p');
+            p.className = 'echo';
+            p.textContent = text;
+            p.style.fontSize = 2 - i * 0.3 + 'rem';
+            p.style.setProperty('--o', 1 - i * 0.17);
+            p.style.animationDelay = i * 0.5 + 's';
+            box.appendChild(p);
+          });
+          input.value = '';
+        });
+      },
+    },
+    22: {
+      kind: 'door', icon: '🚪', title: 'Døra bak døra', bg: 'linear-gradient(160deg, #3a2350, #0b0b2b)',
+      html: `
+        ${thing('door', '🚪', { label: 'Åpne døra', attrs: 'data-act="door"' })}
+        <p class="result" aria-live="polite">Bak døra var det en ny dør. Åpne den.</p>`,
+      init(el, alive) {
+        const door = el.querySelector('[data-act=door]');
+        const inside = door.querySelector('.inside');
+        const out = el.querySelector('.result');
+        const lines = [
+          'Bak den var det en til.',
+          'Og en til.',
+          'De blir mindre.',
+          'Og mindre.',
+          'Du føler deg veldig stor nå.',
+          'Siste dør. Den er bitteliten.',
+        ];
+        let opened = 0;
+        let busy = false;
+        let size = 120;
+        function resize() {
+          door.style.width = size + 'px';
+          door.style.height = size * 1.35 + 'px';
+          inside.style.fontSize = size / 3 + 'px';
+        }
+        resize();
+        door.addEventListener('click', () => {
+          if (busy) return;
+          if (opened === lines.length) {
+            door.hidden = true;
+            out.textContent = has('kjell')
+              ? 'Døra er for liten for deg. Men Kjell får plass! Han går inn … og kommer ut med en sokk. 🧦 Ingen vet hvorfor.'
+              : 'Døra er for liten. Hvis bare du kjente noen som er liten og lodden …';
+            return;
+          }
+          busy = true;
+          door.classList.add('open');
+          setTimeout(() => {
+            if (!alive()) return;
+            // Bak døra står en ny, mindre dør
+            out.textContent = lines[opened++];
+            size *= 0.72;
+            door.classList.add('snap');
+            door.classList.remove('open');
+            door.style.setProperty('--c', pick(COLORS));
+            resize();
+            void door.offsetWidth;
+            door.classList.remove('snap');
+            busy = false;
+          }, reduceMotion ? 0 : 700);
+        });
+      },
+    },
+    23: {
+      kind: 'curtain', icon: '🎤', title: 'Hunden har ordet', bg: img('diva'),
+      html: `
+        <p class="small center">Teppet går opp. Hunden står på scenen.</p>
+        <p class="bubble" aria-live="polite">…</p>
+        <figure class="polaroid"><img src="diva.jpg" alt="Hunden, som snakker"></figure>
+        <p class="center"><button class="btn" data-act="listen">Hør på hunden 👂</button></p>`,
+      init(el) {
+        const bubble = el.querySelector('.bubble');
+        const btn = el.querySelector('[data-act=listen]');
+        let i = 0;
+        btn.addEventListener('click', () => {
+          bubble.textContent = DOG_LINES[i];
+          bubble.classList.remove('pop');
+          void bubble.offsetWidth;
+          bubble.classList.add('pop');
+          i++;
+          if (i === DOG_LINES.length) {
+            discover('hund');
+            btn.textContent = 'Hør en gang til';
+            i = 0;
+          }
+        });
+      },
+    },
+    24: {
+      kind: 'safe', icon: '🏆', title: 'Safen', bg: img('diva'),
+      html: `
+        <p>Nøkkelen passet. Safen går opp, og inni ligger det et diplom.</p>
+        <div class="diploma">
+          <p class="diploma-title">Diplom</p>
+          <p>Dette bekrefter at innehaveren er en <strong>offisielt sertifisert diva</strong>.</p>
+          <p class="small">Utstedt av: Hunden 🐶<br>Vitne: Kjell (støvdott)</p>
+        </div>
+        <p class="center small">Date-tilbudet har fortsatt ingen utløpsdato. 🥂</p>
+        <p class="highlight">Men vent … safen har ingen bakvegg. Det er en luke der inne, og det kommer en lyd fra den.</p>
+        ${thing('hatch', '🪜', { label: 'Luke bak i safen', attrs: 'data-go="kjelleren"', plate: 'Ned' })}`,
+      init() { rain(60); },
+    },
+
+    // ---------- Hemmelige steder ----------
+    bak: {
+      title: 'Rommet bak rommet', bg: 'linear-gradient(160deg, #6b5b4b, #2e2620)',
+      html: `
+        <p>Du burde egentlig ikke være her.</p>
+        <p>Det er her vi lagrer reservedeler: tre ekstra dørhåndtak, et halvt «yaaas» og en «ass» som ble til overs.</p>
+        <p class="highlight">I gulvet er det en luke.</p>
+        ${thing('hatch', '🪜', { label: 'Luke i gulvet', attrs: 'data-go="kjelleren"', plate: 'Ned' })}`,
+      init() { discover('lille-dor'); },
+    },
+    kjelleren: {
+      title: 'Kjelleren', mood: 'dark',
+      html: `
+        <p>Det er mørkt her nede.</p>
+        <p>Veldig mørkt.</p>
+        <p>Du hører noen som tygger. Lyden kommer fra et gammelt kjøleskap i hjørnet. Grønnsaksskuffen står på gløtt.</p>
+        ${thing('drawer', '🥒', { label: 'Grønnsaksskuffen', attrs: 'data-go="agurk"', plate: 'Grønnsaker' })}
+        <p class="center"><button class="btn plain" data-act="flee">Løp opp igjen</button></p>`,
+      init(el) {
+        discover('kjelleren');
+        el.querySelector('[data-act=flee]').addEventListener('click', () => {
+          closeRooms();
+          toast('Klokt valg. Eller var det?');
+        });
+      },
+    },
+    agurk: {
+      title: 'Agurk-dimensjonen 🥒', bg: img('agurk', 'center 40%'), mood: 'green',
+      html: `
+        <p>Du krøp inn i grønnsaksskuffen og havnet i agurk-dimensjonen.</p>
+        <p>Her er alt agurk. Himmelen er agurk. Gulvet er agurk. Diva-o-meteret viser 🥒 %.</p>
+        <p class="highlight">Du er agurk nå. Det går fint. Det går over.</p>
+        <p class="center small">Det står en dør her. Den er laget av agurk.</p>
+        ${thing('door', '💼', { label: 'Agurkdøra', attrs: 'data-go="kontor" style="--c: #3f8f3a"' })}`,
+      init() {
+        discover('agurk');
+        rain(40, ['🥒']);
+      },
+    },
+    kontor: {
+      title: 'Hundens kontor 💼', bg: 'linear-gradient(160deg, #2a1838, #5b2a6e)',
+      html: `
+        <figure class="polaroid"><img src="diva.jpg" alt="Hunden bak et skrivebord"><figcaption>Administrerende diva</figcaption></figure>
+        <p>Hunden ser opp fra skrivebordet.</p>
+        <p class="highlight">«Jeg har ventet på deg.»</p>
+        <p class="highlight" data-out></p>
+        <p class="center small">Bak skrivebordet henger det et teppe. Det blafrer litt.</p>
+        ${thing('curtain', '🌐', { label: 'Teppet bak skrivebordet', attrs: 'data-go="slutten"' })}`,
+      init(el) {
+        const n = state.secrets.length;
+        const missing = TOTAL_SECRETS - n;
+        let comment;
+        if (missing === 0) comment = 'Alt. Du har funnet alt. Det er nesten litt skummelt.';
+        else if (missing === 1 && !has('slutten')) comment = 'Bare én igjen. Den er rett bak teppet.';
+        else comment = `Det er ${missing} igjen. Noen av dem er rett under nesa di.`;
+        el.querySelector('[data-out]').textContent = `«Du har funnet ${n} av ${TOTAL_SECRETS} hemmeligheter. ${comment}»`;
+      },
+    },
+    slutten: {
+      title: 'Slutten av internett', mood: 'void',
+      html: `
+        <p>Gratulerer. Du har nådd slutten av internett.</p>
+        <p>Det er ingenting mer her. Ingen flere dører. Ingen flere luker. Bare deg.</p>
+        <p class="small" data-kjell></p>
+        <p data-out></p>
+        <p class="center"><button class="btn" data-act="restart">Tilbake til start</button></p>`,
+      init(el) {
+        discover('slutten');
+        const n = state.secrets.length;
+        el.querySelector('[data-kjell]').textContent = has('kjell')
+          ? '(Og Kjell. Kjell er her også.)'
+          : '(Du har en følelse av at du har glemt noen. Noen liten og lodden.)';
+        el.querySelector('[data-out]').textContent = n === TOTAL_SECRETS
+          ? 'Du har funnet alle hemmelighetene. Du er offisielt ferdig med internett. 🏆'
+          : `Du har funnet ${n} av ${TOTAL_SECRETS} hemmeligheter. Resten gjemmer seg fortsatt et sted.`;
+        if (n === TOTAL_SECRETS) rain(60);
+        el.querySelector('[data-act=restart]').addEventListener('click', () => {
+          closeRooms(() => window.scrollTo(0, 0));
+          toast('Du er tilbake der du startet. Var det verdt det? (Ja.)');
+        });
+      },
+    },
+  };
+
+  // ---------- Rommene ----------
+  const roomEl = document.getElementById('room');
+  const roomBg = document.getElementById('room-bg');
+  const roomCard = document.getElementById('room-card');
+  const roomClose = document.getElementById('room-close');
+  const kjellEl = document.getElementById('kjell');
+  let roomToken = 0;
+
+  // Åpner en ting, og gjør noe når den har åpnet seg
+  function openThen(el, fn) {
+    if (el.classList.contains('open')) return;
+    el.classList.add('open');
+    setTimeout(fn, reduceMotion ? 0 : 650);
+  }
+
+  function render(id) {
+    const r = rooms[id];
+    const token = ++roomToken;
+    const alive = () => token === roomToken && !roomEl.hidden;
+    roomEl.className = 'room' + (r.mood ? ' ' + r.mood : '');
+    roomBg.style.background = r.bg || '';
+    const label = typeof id === 'number' ? `Nr. ${id} · ${KINDS[r.kind].name}` : 'Hemmelig sted';
+    roomCard.innerHTML = `<p class="room-label">${label}</p><h2 id="room-title">${r.title}</h2>${r.html}`;
+    roomEl.hidden = false;
+    roomEl.scrollTop = 0;
+    document.body.classList.add('in-room');
+    kjellEl.hidden = !has('kjell');
+    roomCard.classList.remove('enter');
+    void roomCard.offsetWidth;
+    roomCard.classList.add('enter');
+    roomCard.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => {
+      if (!b.classList.contains('thing')) return openRoom(b.dataset.go);
+      openThen(b, () => { if (alive()) openRoom(b.dataset.go); });
+    }));
+    if (r.init) r.init(roomCard, alive);
+    if (typeof id === 'number') markOpened(id);
+    roomClose.focus({ preventScroll: true });
+  }
+
+  let afterClose = null;
+  function hideRoom() {
+    roomToken++;
+    roomEl.hidden = true;
+    document.body.classList.remove('in-room');
+    trapHatch.classList.remove('open');
+    if (afterClose) { afterClose(); afterClose = null; }
+  }
+
+  // Hvert rom får sin egen plass i nettleserhistorikken, så tilbake-knappen virker
+  history.scrollRestoration = 'manual';
+  function openRoom(id) {
+    const depth = ((history.state && history.state.depth) || 0) + 1;
+    history.pushState({ room: id, depth }, '');
+    render(id);
+  }
+  function closeRooms(then = null) {
+    afterClose = then;
+    const depth = (history.state && history.state.depth) || 0;
+    if (depth > 0) history.go(-depth);
+    else hideRoom();
+  }
+  window.addEventListener('popstate', (e) => {
+    if (e.state && rooms[e.state.room]) render(e.state.room);
+    else hideRoom();
+  });
+  if (history.state && history.state.room) history.replaceState(null, '');
+
+  roomClose.addEventListener('click', () => closeRooms());
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !roomEl.hidden) closeRooms(); });
+
+  const KJELL_LINES = [
+    'Kjell sier ingenting. Kjell er en støvdott.',
+    'Kjell liker deg.',
+    'Kjell har vært med hele tiden.',
+    'Kjell nøs. Nå er det to Kjell. Nei, vent, bare én.',
+    'Kjell lurer på om det finnes flere støvdotter.',
+  ];
+  kjellEl.addEventListener('click', () => toast(pick(KJELL_LINES)));
+
+  // ---------- Veggen ----------
+  // Rekkefølgen er valgt så veggen blir helt fylt både med 4 og 6 kolonner
+  const ORDER = [12, 18, 7, 4, 1, 3, 6, 15, 17, 19, 22, 21, 2, 5, 10, 11, 14, 24, 23, 13, 9, 16, 8, 20];
+  const wall = document.getElementById('wall');
+  const things = {};
+  ORDER.forEach((n, i) => {
+    const r = rooms[n];
+    const el = document.createElement('button');
+    el.className = `thing t-${r.kind} ${r.size ?? KINDS[r.kind].size}`.trim();
+    el.style.setProperty('--c', COLORS[i % COLORS.length]);
+    el.innerHTML = thingInner(r.kind, r.icon, n);
+    el.addEventListener('click', () => openThing(n));
+    wall.appendChild(el);
+    things[n] = el;
   });
 
-  // Nødknapp
-  const panicResult = document.getElementById('panic-result');
-  const panicLines = [
-    'Forsterkninger er på vei. 🚁',
-    'Glitter-lageret er fortsatt fullt.',
-    'Diva-ressursene er uendelige. Fortsett.',
-    'Naboene lurer på hva som skjer.',
-    'Hunden godkjenner. 🐶',
+  function openThing(n) {
+    const el = things[n];
+    if (n === 24 && !has('nokkel')) {
+      el.classList.remove('shake');
+      void el.offsetWidth;
+      el.classList.add('shake');
+      toast('🔒 Safen er låst. Nøkkelen ligger bak noe annet.');
+      return;
+    }
+    const already = el.classList.contains('open');
+    el.classList.add('open');
+    setTimeout(() => openRoom(n), already || reduceMotion ? 0 : 550);
+  }
+
+  function markOpened(n) {
+    if (!state.opened.includes(n)) {
+      state.opened.push(n);
+      save();
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('opened-count').textContent = state.opened.length;
+    document.getElementById('secret-count').textContent = state.secrets.length;
+    document.getElementById('secret-total').textContent = TOTAL_SECRETS;
+    ORDER.forEach((n) => {
+      const opened = state.opened.includes(n);
+      things[n].classList.toggle('open', opened);
+      things[n].setAttribute('aria-label', `Nr. ${n}, ${KINDS[rooms[n].kind].name}${opened ? ' (åpnet)' : ''}`);
+    });
+    const locked = !has('nokkel');
+    things[24].classList.toggle('locked', locked);
+    things[24].querySelector('.plate').textContent = locked ? '24 🔒' : '24';
+  }
+  updateProgress();
+
+  // ---------- Hemmeligheter på forsiden ----------
+  const heart = document.getElementById('heart');
+  let heartTaps = 0;
+  heart.addEventListener('click', () => {
+    if (heartTaps >= 5) return;
+    heartTaps++;
+    heart.style.fontSize = 1 + heartTaps * 0.25 + 'em';
+    if (heartTaps === 5) {
+      heart.textContent = '💔';
+      rain(40, ['💖', '💔', '💕', '💗']);
+      toast('Du knuste hjertet. Det går bra, det var bare en emoji.');
+      discover('hjerte');
+      setTimeout(() => {
+        heart.textContent = '💖';
+        heart.style.fontSize = '';
+        heartTaps = 0;
+      }, 3000);
+    }
+  });
+
+  const retired = document.getElementById('retired');
+  const retiredLines = [
+    '🏖️ Pensjonert. Driver nå kun med tull.',
+    '🏖️ Pensjonert. Ikke forstyrr.',
+    '🏖️ Jeg sa ikke forstyrr.',
+    '😤 SERIØST.',
+    '😴 zzz …',
   ];
-  let panics = 0;
-  document.getElementById('panic').addEventListener('click', () => {
-    panics++;
-    rain(50);
-    panicResult.textContent = `${pick(panicLines)} (${panics} ${panics === 1 ? 'utrykning' : 'utrykninger'})`;
+  let retiredTaps = 0;
+  retired.addEventListener('click', () => {
+    retiredTaps = (retiredTaps + 1) % retiredLines.length;
+    retired.textContent = retiredLines[retiredTaps];
+    if (retiredTaps === 3) discover('pensjonist');
+  });
+
+  // Nederst på siden: «ingenting» … helt til det plutselig er en luke der
+  const trapdoor = document.getElementById('trapdoor');
+  const hatchWrap = document.getElementById('hatch-wrap');
+  hatchWrap.innerHTML = thing('hatch', '🕳️', { label: 'Luke i gulvet' });
+  const trapHatch = hatchWrap.firstElementChild;
+  const trapLines = ['Det er ingenting her nede.', 'Seriøst. Ingenting.', 'Ok. Det er en luke her.'];
+  let trapTaps = 0;
+  trapdoor.addEventListener('click', () => {
+    trapTaps = Math.min(trapTaps + 1, trapLines.length - 1);
+    trapdoor.textContent = trapLines[trapTaps];
+    if (trapTaps === trapLines.length - 1) hatchWrap.hidden = false;
+  });
+  trapHatch.addEventListener('click', () => openThen(trapHatch, () => openRoom('kjelleren')));
+
+  document.getElementById('reset').addEventListener('click', () => {
+    if (!confirm('Lukke alt og glemme alle hemmelighetene?')) return;
+    state.opened = [];
+    state.secrets = [];
+    save();
+    updateProgress();
+    toast('Alt er lukket igjen. Kjell er tilbake under teppet.');
   });
 </script>
 </body>
