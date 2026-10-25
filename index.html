@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yaaaasss diva</title>
 <meta property="og:title" content="Yaaaasss diva 💅">
-<meta property="og:description" content="La oss prate. Scroll ned.">
+<meta property="og:description" content="Offisielt pensjonert. Driver nå kun med tull.">
 <meta property="og:image" content="diva.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
@@ -26,13 +26,21 @@
     overflow-x: hidden;
   }
 
-  /* Bildet ligger fast i bakgrunnen hele tiden (fungerer også på iPhone) */
+  /* Bildene ligger fast i bakgrunnen (fungerer også på iPhone) og bytter når du scroller */
   .bg {
     position: fixed;
     inset: 0;
-    background: url("diva.jpg") center 30% / cover no-repeat;
+    background: center 30% / cover no-repeat;
     z-index: -1;
+    opacity: 0;
+    transition: opacity 0.8s ease;
   }
+  .bg.active { opacity: 1; }
+  .bg-diva { background-image: url("diva.jpg"); }
+  .bg-mikke { background-image: url("mikke.jpg"); }
+  .bg-sladder { background-image: url("sladder.jpg"); }
+  .bg-taco { background-image: url("taco.jpg"); background-position: center; }
+  .bg-agurk { background-image: url("agurk.jpg"); background-position: center 40%; }
 
   .rainbow {
     background: linear-gradient(90deg, #f25c5c, #f2a65c, #e8d24a, #6cc96c, #5cb8f2, #9a6cf2, #d65cf2);
@@ -50,7 +58,14 @@
     justify-content: space-between;
     padding: 5vh 16px 6vh;
   }
+  .hero-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
   .greeting {
+    margin: 0;
     background: var(--card);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -62,6 +77,16 @@
     text-align: center;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
   }
+  .retired {
+    background: #2a1838;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: center;
+    transform: rotate(-2deg);
+  }
   .heart { display: inline-block; animation: beat 1.2s ease-in-out infinite; }
   @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.25); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } }
   .scroll-hint {
@@ -72,6 +97,7 @@
     border-radius: 999px;
     font-weight: 700;
     font-size: 1.1rem;
+    text-align: center;
     animation: bob 1.6s ease-in-out infinite;
   }
   @keyframes bob { 50% { transform: translateY(8px); } }
@@ -88,7 +114,7 @@
     -webkit-backdrop-filter: blur(10px);
     border-radius: 24px;
     padding: 28px 24px;
-    margin: 0 0 70vh;
+    margin: 0 0 50vh;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     opacity: 0;
     transform: translateY(40px);
@@ -114,17 +140,15 @@
 
   .vs {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
-    align-items: center;
     text-align: center;
     margin: 18px 0;
     font-weight: 700;
   }
   .vs div { background: #fff; border-radius: 16px; padding: 12px 8px; }
-  .vs span { font-size: 1.6rem; }
+  .vs b { display: block; font-size: 1.6rem; }
 
-  .card h2 + p.lead { font-weight: 700; }
   .highlight {
     background: rgba(255,255,255,0.7);
     border-left: 5px solid var(--accent);
@@ -134,95 +158,169 @@
     font-weight: 700;
   }
 
+  .btn {
+    font: inherit;
+    font-weight: 800;
+    font-size: 1.15rem;
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 24px;
+    color: #fff;
+    background: linear-gradient(90deg, #f25c5c, #d65cf2, #5cb8f2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn.plain { background: #fff; color: var(--ink); }
+  .center { text-align: center; }
+
+  /* Diva-o-meter */
+  .meter {
+    height: 28px;
+    background: #fff;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 18px 0 12px;
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #f25c5c, #f2a65c, #e8d24a, #6cc96c, #5cb8f2, #9a6cf2, #d65cf2);
+    transition: width 1.4s cubic-bezier(.2, .8, .2, 1);
+  }
+  .meter.broken { animation: shake 0.4s ease-in-out 3; }
+  @keyframes shake { 25% { transform: translateX(-6px) rotate(-1deg); } 75% { transform: translateX(6px) rotate(1deg); } }
+  .result { min-height: 3.2em; text-align: center; font-weight: 700; }
+  .result strong { font-size: 1.6rem; display: block; }
+
+  /* Ja/Nei med en nei-knapp som stikker av */
+  .choices {
+    position: relative;
+    height: 150px;
+    margin-top: 12px;
+  }
+  .choices .btn { position: absolute; top: 50px; }
+  #yes { left: 12%; }
+  #no { left: 58%; transition: left 0.25s ease, top 0.25s ease; }
+
+  /* Dagens diva-energi */
+  .polaroid {
+    --tilt: -3deg;
+    background: #fff;
+    padding: 10px 10px 14px;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    margin: 18px auto;
+    max-width: 320px;
+    transform: rotate(var(--tilt));
+  }
+  .polaroid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; }
+  .polaroid figcaption { margin-top: 10px; font-weight: 700; text-align: center; line-height: 1.3; }
+  .polaroid.pop { animation: pop 0.4s ease; }
+  @keyframes pop { from { transform: rotate(var(--tilt)) scale(0.6); opacity: 0; } }
+
+  ol.rules { margin: 0; padding-left: 1.4em; font-size: 1.12rem; }
+  ol.rules li { margin-bottom: 10px; }
+  ol.rules li::marker { font-weight: 800; color: var(--accent); }
+
+  /* Emoji-regn */
+  .drop {
+    position: fixed;
+    top: -3rem;
+    font-size: 2rem;
+    pointer-events: none;
+    z-index: 10;
+    animation: fall linear forwards;
+  }
+  @keyframes fall { to { transform: translateY(115vh) rotate(360deg); } }
+
   @media (prefers-reduced-motion: reduce) {
     .card { transition: none; opacity: 1; transform: none; }
-    .scroll-hint, .heart { animation: none; }
+    .scroll-hint, .heart, .meter.broken, .polaroid.pop { animation: none; }
+    .meter-fill, #no, .bg { transition: none; }
   }
 </style>
 </head>
 <body>
-<div class="bg" aria-hidden="true"></div>
+<div class="bg bg-diva active" data-name="diva" aria-hidden="true"></div>
+<div class="bg bg-mikke" data-name="mikke" aria-hidden="true"></div>
+<div class="bg bg-sladder" data-name="sladder" aria-hidden="true"></div>
+<div class="bg bg-taco" data-name="taco" aria-hidden="true"></div>
+<div class="bg bg-agurk" data-name="agurk" aria-hidden="true"></div>
 
-<header class="hero">
-  <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <span class="heart">💖</span></h1>
-  <div class="scroll-hint">Scroll ned, diva. La oss prate ↓</div>
+<header class="hero" data-bg="diva">
+  <div class="hero-top">
+    <h1 class="greeting"><span class="rainbow">Hey diva ass bitch</span> <span class="heart">💖</span></h1>
+    <div class="retired">🏖️ Pensjonert. Driver nå kun med tull.</div>
+  </div>
+  <div class="scroll-hint">Scroll ned, diva. Ingenting viktig her lenger ↓</div>
 </header>
 
 <main>
-  <section class="card">
-    <h2>Okei. <span class="rainbow">Status.</span></h2>
-    <p>Vi har kranglet i mange dager nå. Det er ikke gøy. Ikke for meg, og jeg tipper ikke for deg heller.</p>
+  <section class="card" data-bg="diva">
+    <h2>Oppdrag <span class="rainbow">fullført</span> ✅</h2>
+    <p>Denne nettsiden hadde én jobb. Den gjorde den. Nå har den fått sluttpakke, gullklokke og et par solbriller.</p>
     <div class="vs">
-      <div>Jeg: «Jeg har rett.»</div>
-      <span>🤝</span>
-      <div>Du: «Jeg har rett.»</div>
+      <div>Seriøs prat<b>❌</b>Avsluttet</div>
+      <div>Diva-nivå<b>📈</b>Rekordhøyt</div>
     </div>
-    <p>Statistisk sett er det ganske sannsynlig at vi <strong>begge</strong> har litt rett. Og litt ikke.</p>
+    <p class="small">Herfra og ned er alt 100 % tull. Du er advart.</p>
   </section>
 
-  <section class="card">
-    <h2>Jeg har <span class="rainbow">tenkt</span> 🧠</h2>
-    <p>Jeg har tenkt mye. Jeg føler jeg forstår hvor du kommer fra, og jeg vet hvorfor jeg kjemper for det jeg mener.</p>
-    <p>Men jeg mistenker at følelsene hos oss begge har gjort det nesten umulig å virkelig ta inn det den andre sier.</p>
+  <section class="card" data-bg="mikke">
+    <h2>Diva-o-<span class="rainbow">meter</span> 📏</h2>
+    <p>Vitenskapelig kalibrert. Garantert presis. Trykk og se.</p>
+    <div class="meter" id="meter"><div class="meter-fill" id="meter-fill"></div></div>
+    <p class="result" id="meter-result" aria-live="polite"></p>
+    <p class="center"><button class="btn" id="measure">Mål diva-nivå 💅</button></p>
   </section>
 
-  <section class="card">
-    <h2>Først: <span class="rainbow">du har rett</span></h2>
-    <p>Du sier – og du <strong>har rett</strong> i – at du ikke trenger å henge med, omgås eller snakke med folk som gir deg dårlig energi eller er kjipe mot deg.</p>
-    <p class="highlight">Det er 100 % lov, og det er noe jeg vil forsvare for deg.</p>
-    <p>Du følte sikkert at jeg utfordret det. Det var aldri meningen.</p>
+  <section class="card" data-bg="sladder">
+    <h2>Viktig <span class="rainbow">spørsmål</span></h2>
+    <p class="big">Er du en diva?</p>
+    <div class="choices" id="choices">
+      <button class="btn" id="yes">Ja 💅</button>
+      <button class="btn plain" id="no">Nei</button>
+    </div>
+    <p class="result" id="choice-result" aria-live="polite"></p>
   </section>
 
-  <section class="card">
-    <h2>Så, over til <span class="rainbow">meg</span></h2>
-    <p>Jeg har vært, og er fortsatt, skikkelig frustrert over det som fra min side oppleves som at du fraskriver deg ansvaret.</p>
-    <p>Simen er en nær venn av meg, og Guro er viktig for ham. Du og jeg har bygget en relasjon til dem begge gjennom flere år, med reiser og mye mer.</p>
-    <p>Når du plutselig – sett fra deres side – kutter all kontakt, og samtidig sier til meg «du får si ifra, du får fikse det, han er din venn», havner jeg i en ekstremt ubehagelig situasjon.</p>
-    <p>Da må jeg forklare til én jeg er glad i, hvorfor en annen jeg er glad i ikke vil henge lenger.</p>
-    <p class="highlight">Det er ikke min jobb. Jeg er ikke postbud. 📮</p>
-    <p>Det er ikke gøy å måtte formidle noe som risikerer å sette noen jeg er glad i – altså deg – i et dårlig lys. Det er ikke greit å legge det på meg.</p>
+  <section class="card" data-bg="diva">
+    <h2>Dagens <span class="rainbow">diva-energi</span> 🔮</h2>
+    <p>Universet har en beskjed til deg. Trykk for å se hvilken energi du har i dag.</p>
+    <figure class="polaroid" id="energy" hidden>
+      <img id="energy-img" alt="">
+      <figcaption id="energy-text" aria-live="polite"></figcaption>
+    </figure>
+    <p class="center"><button class="btn" id="energy-btn">Vis dagens energi 🔮</button></p>
   </section>
 
-  <section class="card">
-    <h2>Og en ting til</h2>
-    <p>Når jeg hører at du ikke bryr deg, at det ikke er viktig, eller at jeg bare overreagerer og må kontrollere følelsene mine, blir jeg <strong>ekstremt</strong> provosert. Da føles det som om noe som er veldig viktig for meg blir avfeid.</p>
-    <p>Relasjonene mine er ekstremt viktige for meg – og spesielt din relasjon til menneskene i livet mitt.</p>
+  <section class="card" data-bg="taco">
+    <h2>Postkontoret er <span class="rainbow">stengt</span> 📮</h2>
+    <p>Postbudet har levert sin siste melding og sagt opp.</p>
+    <p class="highlight">Fra og med i dag må alle meldinger leveres personlig. Takk for forståelsen.</p>
+    <p class="small">Klager kan sendes til postbudet. Å nei, vent.</p>
   </section>
 
-  <section class="card">
-    <p class="big">Jeg trenger ikke at du er bestis med alle.</p>
-    <p class="big">Jeg trenger ikke engang at du kjenner dem.</p>
-    <p class="big">Bare at du viser dem den <span class="rainbow">respekten</span> de fortjener.</p>
-    <p style="text-align:center; margin-top:18px; font-size:1.25rem">Ikke bare fordi det er rett, men fordi det er viktig for <strong class="rainbow">meg</strong>.</p>
+  <section class="card" data-bg="agurk">
+    <h2>Offisielle <span class="rainbow">diva-regler</span> 📜</h2>
+    <ol class="rules">
+      <li>Man går aldri inn i et rom. Man gjør <strong>entré</strong>.</li>
+      <li>«Jeg er sen» heter «jeg er etterlengtet».</li>
+      <li>Solbriller er et humør, ikke et tilbehør. 🕶️</li>
+      <li>Hydrér. Diva-glød kommer ikke av seg selv. 💧</li>
+      <li>Når folk er ass: vær den voksne i rommet. Med perfekt hår.</li>
+      <li>Uansett hvem som dukker opp i bakgrunnen, er hunden fortsatt den største divaen. Det er bare sånn det er.</li>
+    </ol>
   </section>
 
-  <section class="card">
-    <h2>Haugen jeg <span class="rainbow">dør på</span> ⛰️</h2>
-    <p>Jeg skal være ærlig: på dette punktet står jeg fast. Rent prinsipielt mener jeg at jeg har rett.</p>
-    <p><strong>Men</strong> – og dette er viktig – det betyr ikke noe negativt om deg.</p>
-    <p class="highlight">Det eneste jeg ber om, er at du tar ansvar for dine egne handlinger, og er den voksne også når folk er ass.</p>
-    <p>Det er alt. Du er fortsatt min diva. 💅</p>
-  </section>
-
-  <section class="card">
-    <h2><span class="rainbow">Takk</span> ❤️</h2>
-    <p>Du sendte meldingen til Guro. Jeg vet at det var ubehagelig, og at du egentlig ikke hadde lyst.</p>
-    <p class="highlight">Du gjorde det likevel. Jeg ser det, og det betyr mye for meg.</p>
-  </section>
-
-  <section class="card">
-    <h2>Fremover 🧭</h2>
-    <p>Du har full kontroll over din egen omgangskrets og ditt eget liv. Det står jeg for.</p>
-    <p class="highlight">Men har du bygget en relasjon med vennene mine, og ikke får noe ut av den lenger, er det ditt ansvar å avslutte den ordentlig – ikke mitt.</p>
-    <p>Og hvis det føles skummelt? Da er det helt greit å be meg om hjelp. Spør meg, så stiller jeg opp.</p>
-    <p>Forskjellen er om jeg blir <strong>spurt</strong>, eller om det bare blir <strong>lagt på</strong> meg.</p>
-  </section>
-
-  <section class="card">
-    <h2>Så: <span class="rainbow">date?</span> 🥂</h2>
-    <p>Jeg foreslår en date. Bare oss to, som forlovede. 💍</p>
-    <p>Der vi tar hverandre på alvor, lytter ordentlig, og møtes på halvveien.</p>
-    <p class="big">Du velger sted. <span class="rainbow">Jeg ordner resten.</span></p>
+  <section class="card" data-bg="diva">
+    <h2>Diva-<span class="rainbow">nødknapp</span> 🚨</h2>
+    <p>Kjedelig dag? For lite glitter i livet? Trykk.</p>
+    <p class="center"><button class="btn" id="panic">Send diva-forsterkninger</button></p>
+    <p class="result" id="panic-result" aria-live="polite"></p>
+    <p class="small center">Date-tilbudet har forresten ingen utløpsdato. 🥂</p>
   </section>
 </main>
 
@@ -233,6 +331,158 @@
   }, { threshold: 0.25 });
   document.querySelectorAll('.card').forEach((c) => io.observe(c));
 
+  // Bakgrunnen bytter til kortets egen diva når kortet når midten av skjermen
+  const layers = document.querySelectorAll('.bg');
+  const bgObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      layers.forEach((l) => l.classList.toggle('active', l.dataset.name === e.target.dataset.bg));
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  document.querySelectorAll('[data-bg]').forEach((el) => bgObserver.observe(el));
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pick = (list) => list[Math.floor(Math.random() * list.length)];
+
+  // Emoji-regn
+  function rain(count = 40) {
+    if (reduceMotion) return;
+    const emojis = ['💅', '✨', '💖', '👑', '💜', '🌈', '🐶', '💋', '🕶️'];
+    for (let i = 0; i < count; i++) {
+      const d = document.createElement('span');
+      d.className = 'drop';
+      d.textContent = pick(emojis);
+      d.style.left = Math.random() * 100 + 'vw';
+      d.style.animationDuration = 2 + Math.random() * 2.5 + 's';
+      d.style.animationDelay = Math.random() * 0.8 + 's';
+      d.addEventListener('animationend', () => d.remove());
+      document.body.appendChild(d);
+    }
+  }
+
+  // Diva-o-meter: svaret er alltid over 100 %
+  const readings = [
+    [112, 'Litt over skalaen. Helt normalt for deg.'],
+    [147, 'Måleren svetter. 💦'],
+    [200, 'Dobbel diva. Statistisk umulig, men her er vi.'],
+    [404, 'Diva not found … fordi den er for stor til å måles.'],
+    [777, 'Jackpot. 🎰 Du vant mer diva.'],
+    [999, 'Måleren gikk i stykker. Regningen sendes til deg. 💅'],
+  ];
+  const meter = document.getElementById('meter');
+  const fill = document.getElementById('meter-fill');
+  const meterResult = document.getElementById('meter-result');
+  let lastReading = null;
+  document.getElementById('measure').addEventListener('click', () => {
+    let r;
+    do { r = pick(readings); } while (r === lastReading);
+    lastReading = r;
+    meter.classList.remove('broken');
+    fill.style.transition = 'none';
+    fill.style.width = '0';
+    meterResult.textContent = 'Måler …';
+    void fill.offsetWidth;
+    fill.style.transition = '';
+    fill.style.width = '100%';
+    setTimeout(() => {
+      meter.classList.add('broken');
+      meterResult.innerHTML = `<strong class="rainbow">${r[0]} %</strong>${r[1]}`;
+      if (r[0] >= 404) rain(25);
+    }, reduceMotion ? 0 : 1400);
+  });
+
+  // Nei-knappen nekter å bli trykket på
+  const choices = document.getElementById('choices');
+  const yes = document.getElementById('yes');
+  const no = document.getElementById('no');
+  const choiceResult = document.getElementById('choice-result');
+  const taunts = [
+    'Hmm, den knappen virker ikke.',
+    'Nei-knappen er ute av drift. 🚫',
+    'Prøv gjerne igjen. Det hjelper ikke.',
+    'Feil svar finnes ikke her. Bare ja.',
+  ];
+  let attempts = 0;
+  let convertedAt = 0;
+  function dodge() {
+    attempts++;
+    if (attempts >= 6) {
+      no.textContent = 'Ja (også) 💅';
+      choiceResult.textContent = 'Nei-knappen ga opp og byttet side.';
+      convertedAt = Date.now();
+      return;
+    }
+    const box = choices.getBoundingClientRect();
+    const yesBox = yes.getBoundingClientRect();
+    const maxX = box.width - no.offsetWidth;
+    const maxY = box.height - no.offsetHeight;
+    let x, y, tries = 0;
+    do {
+      x = Math.random() * maxX;
+      y = Math.random() * maxY;
+      tries++;
+    } while (tries < 20 &&
+      x < yesBox.right - box.left + 10 && x + no.offsetWidth > yesBox.left - box.left - 10 &&
+      y < yesBox.bottom - box.top + 10 && y + no.offsetHeight > yesBox.top - box.top - 10);
+    no.style.left = x + 'px';
+    no.style.top = y + 'px';
+    choiceResult.textContent = pick(taunts);
+  }
+  // Med mus stikker den av før du rekker å trykke; på mobil hopper den unna når du trykker
+  no.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && attempts < 6) dodge(); });
+  no.addEventListener('click', () => {
+    if (attempts < 6) dodge();
+    // Ignorer klikket fra samme trykk som fikk knappen til å bytte side
+    else if (Date.now() - convertedAt > 500) { choiceResult.textContent = 'Selvfølgelig. Det visste vi. 💅'; rain(); }
+  });
+  yes.addEventListener('click', () => {
+    choiceResult.textContent = 'Selvfølgelig. Det visste vi. 💅';
+    rain();
+  });
+
+  // Dagens diva-energi
+  const energies = [
+    ['diva.jpg', 'Smilende hund med teksten Yaaaasss diva', 'Yaaaasss diva. Som vanlig. Ingen overraskelser her. 💅'],
+    ['mikke.jpg', 'Smilende ansikt i Mikke Mus-kostyme', 'Magisk, men litt forvirrende. Ingen vet helt hva som skjer, men alle smiler. ✨'],
+    ['sladder.jpg', 'Forvrengt selfie med et lurt smil', 'Vet noe du ikke vet, og har ikke tenkt å si det. 👀'],
+    ['taco.jpg', 'Smilende person som sikler', 'Har akkurat fått vite at det er taco til middag. 🌮'],
+    ['agurk.jpg', 'Person med munnen full av agurker', 'Spa-dag. Agurkene havnet litt feil, men selvtilliten sitter. 🥒'],
+  ];
+  const energy = document.getElementById('energy');
+  const energyImg = document.getElementById('energy-img');
+  const energyText = document.getElementById('energy-text');
+  const energyBtn = document.getElementById('energy-btn');
+  let lastEnergy = null;
+  energyBtn.addEventListener('click', () => {
+    let en;
+    do { en = pick(energies); } while (en === lastEnergy);
+    lastEnergy = en;
+    energyImg.src = en[0];
+    energyImg.alt = en[1];
+    energyText.textContent = en[2];
+    energy.hidden = false;
+    energy.style.setProperty('--tilt', (Math.random() * 8 - 4).toFixed(1) + 'deg');
+    energy.classList.remove('pop');
+    void energy.offsetWidth;
+    energy.classList.add('pop');
+    energyBtn.textContent = 'Spør universet igjen 🔮';
+  });
+
+  // Nødknapp
+  const panicResult = document.getElementById('panic-result');
+  const panicLines = [
+    'Forsterkninger er på vei. 🚁',
+    'Glitter-lageret er fortsatt fullt.',
+    'Diva-ressursene er uendelige. Fortsett.',
+    'Naboene lurer på hva som skjer.',
+    'Hunden godkjenner. 🐶',
+  ];
+  let panics = 0;
+  document.getElementById('panic').addEventListener('click', () => {
+    panics++;
+    rain(50);
+    panicResult.textContent = `${pick(panicLines)} (${panics} ${panics === 1 ? 'utrykning' : 'utrykninger'})`;
+  });
 </script>
 </body>
 </html>
